@@ -1,5 +1,4 @@
-//package artists
-package main
+package artists
 
 import (
 	"encoding/json"
@@ -7,11 +6,12 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 )
 
-type SearchAjaxBand struct {
+type SearchAjaxArtists struct {
 	Error               string     `json:"error"`
 	TotalRecords        int        `json:"iTotalRecords"`
 	TotalDisplayRecords int        `json:"iTotalDisplayRecords"`
@@ -19,7 +19,12 @@ type SearchAjaxBand struct {
 	Data                [][]string `json:"aaData"`
 }
 
-func searchArtist(artist string) ([][]string, error) {
+type SearchArtistsData struct {
+	Name string
+	URL  string
+}
+
+func searchArtistAjax(artist string) ([][]string, error) {
 
 	var searchArtistData [][]string
 	artistString := strings.Replace(artist, " ", "+", -1)
@@ -46,22 +51,32 @@ func searchArtist(artist string) ([][]string, error) {
 	if readErr != nil {
 		return searchArtistData, readErr
 	}
-	searchArtist := SearchAjaxBand{}
+	searchArtist := SearchAjaxArtists{}
 	jsonErr := json.Unmarshal(body, &searchArtist)
 	if jsonErr != nil {
 		log.Fatal("ERRRRR_3")
 		return searchArtistData, jsonErr
 	}
 	searchArtistData = searchArtist.Data
-	fmt.Println(searchArtist)
+	fmt.Println(searchArtist.Data)
 	return searchArtistData, nil
 }
 
-func main() {
-	data, err := searchArtist("DarkThrone")
+func SearchArtist(artist string) (SearchArtistsData, error) {
+	var artistData SearchArtistsData
+	data, err := searchArtistAjax(artist)
+
 	if err != nil {
-		log.Fatal(err)
+		return artistData, err
 	} else {
 		fmt.Println(data)
+		re := regexp.MustCompile("<a href=\"([^\"]+)\">([^<]+)</a>")
+		for _, foundArtistData := range data {
+			fmt.Println(foundArtistData[0])
+			match := re.FindAllStringSubmatch(foundArtistData[0], -1)
+			fmt.Println("_")
+			fmt.Println(match[0])
+		}
 	}
+	return artistData, nil
 }
