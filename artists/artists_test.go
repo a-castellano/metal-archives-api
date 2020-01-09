@@ -1,22 +1,59 @@
 package artists
 
 import (
+	"bytes"
+	"io/ioutil"
 	"net/http"
 	"testing"
 )
 
-type ClientMock struct {
+type RoundTripperMock struct {
+	Response *http.Response
+	RespErr  error
 }
 
-func (c *ClientMock) Do(req *http.Request) (*http.Response, error) {
-	return &http.Response{}, nil
+func (rtm *RoundTripperMock) RoundTrip(*http.Request) (*http.Response, error) {
+	return rtm.Response, rtm.RespErr
 }
 
 func TestClientNoArtists(t *testing.T) {
-	client := &ClientMock{}
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+		]
+}
+	`))}}}
 
-	artist := "SomeArtist"
-	_, _ = searchArtistAjax(client, artist)
+	data, err := searchArtistAjax(client, "AnyArtist")
 
-	t.Errorf("This is an error")
+	if err != nil {
+		t.Errorf("TestClientNoArtists shouldn't fail.")
+	}
+
+	if len(data) != 0 {
+		t.Errorf("TestClientNoArtists should return empty data.")
+	}
+
+}
+
+func TestBrokenJson(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+}
+	`))}}}
+
+	_, err := searchArtistAjax(client, "AnyArtist")
+
+	if err == nil {
+		t.Errorf("TestBrokenJson should fail because JSON response is broken.")
+	}
 }

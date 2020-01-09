@@ -23,11 +23,7 @@ type SearchArtistsData struct {
 	URL  string
 }
 
-type HttpClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
-
-func searchArtistAjax(client HttpClient, artist string) ([][]string, error) {
+func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 
 	var searchArtistData [][]string
 	artistString := strings.Replace(artist, " ", "+", -1)
@@ -44,9 +40,15 @@ func searchArtistAjax(client HttpClient, artist string) ([][]string, error) {
 	if getErr != nil {
 		return searchArtistData, getErr
 	}
-	fmt.Println(res)
+	//fmt.Println("_____")
+	//fmt.Println(res)
+	//fmt.Println("_____")
 
 	body, readErr := ioutil.ReadAll(res.Body)
+	//fmt.Println("_____")
+	//s := string(body)
+	//fmt.Println(s) // ABC€�
+	//fmt.Println("_____")
 	if readErr != nil {
 		return searchArtistData, readErr
 	}
@@ -62,7 +64,7 @@ func searchArtistAjax(client HttpClient, artist string) ([][]string, error) {
 func SearchArtist(artist string) (SearchArtistsData, error) {
 
 	var artistData SearchArtistsData
-	client := &http.Client{
+	client := http.Client{
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
