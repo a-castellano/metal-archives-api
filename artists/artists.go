@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"regexp"
 	"strings"
@@ -24,6 +23,10 @@ type SearchArtistsData struct {
 	URL  string
 }
 
+type HttpClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
 func searchArtistAjax(artist string) ([][]string, error) {
 
 	var searchArtistData [][]string
@@ -31,16 +34,15 @@ func searchArtistAjax(artist string) ([][]string, error) {
 	url := fmt.Sprintf("https://www.metal-archives.com/search/ajax-band-search/?field=name&query=%s", artistString)
 
 	client := http.Client{
-		Timeout: time.Second * 2, // Maximum of 2 secs
+		Timeout: time.Second * 5, // Maximum of 2 secs
 	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		log.Fatal("ERRRRR")
 		return searchArtistData, err
 	}
 
-	req.Header.Set("User-Agent", "https://github.com/a-castellano/metal-archives-api")
+	req.Header.Set("User-Agent", "https://github.com/a-castellano/metal-archives-wrapper")
 
 	res, getErr := client.Do(req)
 	if getErr != nil {
@@ -54,7 +56,6 @@ func searchArtistAjax(artist string) ([][]string, error) {
 	searchArtist := SearchAjaxArtists{}
 	jsonErr := json.Unmarshal(body, &searchArtist)
 	if jsonErr != nil {
-		log.Fatal("ERRRRR_3")
 		return searchArtistData, jsonErr
 	}
 	searchArtistData = searchArtist.Data
@@ -70,12 +71,13 @@ func SearchArtist(artist string) (SearchArtistsData, error) {
 		return artistData, err
 	} else {
 		fmt.Println(data)
-		re := regexp.MustCompile("<a href=\"([^\"]+)\">([^<]+)</a>")
+		re := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 		for _, foundArtistData := range data {
-			fmt.Println(foundArtistData[0])
+			fmt.Println(foundArtistData)
 			match := re.FindAllStringSubmatch(foundArtistData[0], -1)
 			fmt.Println("_")
-			fmt.Println(match[0])
+			fmt.Println(match[0][1])
+			fmt.Println(match[0][2])
 		}
 	}
 	return artistData, nil
