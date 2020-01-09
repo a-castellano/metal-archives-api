@@ -27,15 +27,11 @@ type HttpClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-func searchArtistAjax(artist string) ([][]string, error) {
+func searchArtistAjax(client HttpClient, artist string) ([][]string, error) {
 
 	var searchArtistData [][]string
 	artistString := strings.Replace(artist, " ", "+", -1)
 	url := fmt.Sprintf("https://www.metal-archives.com/search/ajax-band-search/?field=name&query=%s", artistString)
-
-	client := http.Client{
-		Timeout: time.Second * 5, // Maximum of 2 secs
-	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -48,6 +44,7 @@ func searchArtistAjax(artist string) ([][]string, error) {
 	if getErr != nil {
 		return searchArtistData, getErr
 	}
+	fmt.Println(res)
 
 	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
@@ -59,13 +56,17 @@ func searchArtistAjax(artist string) ([][]string, error) {
 		return searchArtistData, jsonErr
 	}
 	searchArtistData = searchArtist.Data
-	fmt.Println(searchArtist.Data)
 	return searchArtistData, nil
 }
 
 func SearchArtist(artist string) (SearchArtistsData, error) {
+
 	var artistData SearchArtistsData
-	data, err := searchArtistAjax(artist)
+	client := &http.Client{
+		Timeout: time.Second * 5, // Maximum of 5 secs
+	}
+
+	data, err := searchArtistAjax(client, artist)
 
 	if err != nil {
 		return artistData, err
