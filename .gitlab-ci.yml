@@ -5,17 +5,23 @@ stages:
     - dep
     - test
 
-before_script:
-  - export GOPATH="$(pwd)/go"
-  - mkdir -p "$(pwd)/go"
-  - go env -w GOPATH="$(pwd)/go"
-  - mkdir -p $GOPATH/src/a-castellano
-  - ln -s ${CI_PROJECT_DIR} $GOPATH/src/a-castellano/metal-archives-wrapper
-  - cd $GOPATH/src/a-castellano/metal-archives-wrapper
+      #before_script:
+      #  - export GOPATH="$(pwd)/go"
+      #  - mkdir -p "$(pwd)/go"
+      #  - go env -w GOPATH="$(pwd)/go"
+      #  - mkdir -p $GOPATH/src/a-castellano
+      #  - ln -s ${CI_PROJECT_DIR} $GOPATH/src/a-castellano/metal-archives-wrapper
+      #  - cd $GOPATH/src/a-castellano/metal-archives-wrapper
 
 dep:
   stage: dep
   script:
+    - export GOPATH="$(pwd)/go"
+    - mkdir -p "$(pwd)/go"
+    - go env -w GOPATH="$(pwd)/go"
+    - mkdir -p $GOPATH/src/a-castellano
+    - ln -s ${CI_PROJECT_DIR} $GOPATH/src/a-castellano/metal-archives-wrapper
+    - cd $GOPATH/src/a-castellano/metal-archives-wrapper
     - make dep
   artifacts:
     name: "vendor-$CI_PIPELINE_ID"
