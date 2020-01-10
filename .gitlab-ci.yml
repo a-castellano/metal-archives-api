@@ -16,7 +16,12 @@ before_script:
 dep:
   stage: dep
   script:
-    - dep ensure -v -vendor-only
+    - make dep
+  artifacts:
+    name: "vendor-$CI_PIPELINE_ID"
+    paths:
+      - vendor/
+    expire_in: 1 hour
 
 unit_tests:
   stage: test
