@@ -18,7 +18,7 @@ before_script:
 dep:
   stage: dep
   script:
-    - make dep
+    - dep ensure -v -vendor-only
 
 unit_tests:
   stage: test
