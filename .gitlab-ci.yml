@@ -6,7 +6,7 @@ stages:
     - test
 
 before_script:
-  - GOPATH="$(pwd)/go"
+  - export GOPATH="$(pwd)/go"
   - mkdir -p "$(pwd)/go"
   - go env -w GOPATH="$(pwd)/go"
   - mkdir -p $GOPATH/src/a-castellano
