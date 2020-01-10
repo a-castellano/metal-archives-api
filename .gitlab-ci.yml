@@ -10,8 +10,8 @@ before_script:
   - mkdir -p "$(pwd)/go"
   - go env -w GOPATH="$(pwd)/go"
   - mkdir -p $GOPATH/src/a-castellano
-  - ln -s ${CI_PROJECT_DIR} $GOPATH/src/a-castellano/metal-archives-wrapper
-  - cd $GOPATH/src/a-castellano/metal-archives-wrapper
+  - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/metal-archives-wrapper
+  - cd $GOPATH/src/github.com/a-castellano/metal-archives-wrapper
 
 dep:
   stage: dep
