@@ -12,7 +12,7 @@ before_script:
   - ln -s ${CI_PROJECT_DIR} $(pwd)/go/src/a-castellano/metal-archives-wrappe
   - cd $(pwd)/go/src/a-castellano/metal-archives-wrappe
 
-unit_tests:
+dep:
   stage: dep
   script:
     - make dep
