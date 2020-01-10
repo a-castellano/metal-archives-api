@@ -1,5 +1,5 @@
 
-image: daedalusproject/base_golang_1_13:202001101823
+image: daedalusproject/base_golang_1_13:latest
 
 stages:
     - test
