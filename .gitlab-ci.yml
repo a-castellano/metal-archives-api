@@ -12,6 +12,8 @@ before_script:
   - mkdir -p $(pwd)/go/src/a-castellano
   - ln -s ${CI_PROJECT_DIR} $(pwd)/go/src/a-castellano/metal-archives-wrapper
   - cd $(pwd)/go/src/a-castellano/metal-archives-wrapper
+  - pwd
+  - echo " - $GOPATH"
 
 dep:
   stage: dep
