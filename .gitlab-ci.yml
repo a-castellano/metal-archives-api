@@ -5,6 +5,7 @@ stages:
     - test
 
 before_script:
+  - pwd
   - mkdir -p /go/src/gitlab.com/pantomath-io /go/src/_/builds
   - cp -r $CI_PROJECT_DIR /go/src/gitlab.com/pantomath-io/pantomath
   - ln -s /go/src/gitlab.com/pantomath-io /go/src/_/builds/pantomath-io
