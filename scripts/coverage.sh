@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'mode: count' > cover/coverage.cov
+
+mkdir -p cover
 PKG_LIST=$(go list ./... | grep -v /vendor/)
 for package in ${PKG_LIST}; do
     go test -covermode=count -coverprofile "cover/${package##*/}.cov" "$package" ;

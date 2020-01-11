@@ -45,6 +45,11 @@ code_coverage:
   stage: test
   script:
     - make coverage
+  artifacts:
+    name: "coverage-$CI_PIPELINE_ID"
+    paths:
+      - coverage.html
+    expire_in: 1 hour
 
 code_coverage_report:
   stage: test

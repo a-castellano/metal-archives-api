@@ -11,5 +11,11 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories 
+# Dependency folder
 vendor/
+
+# Cover folder
+cover/
+
+# Cover html report
+coverage.html

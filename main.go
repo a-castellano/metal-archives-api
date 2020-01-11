@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	data, err := artists.SearchArtist("Busjhgfkafdharzum")
+	data, err := artists.SearchArtist("Burzum")
 	if err != nil {
 		log.Fatal(err)
 	} else {
