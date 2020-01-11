@@ -5,6 +5,7 @@ if [ -z ${CI_PIPELINE_ID+x} ]; then
 else
     export CC=/usr/bin/clang
     export GOPATH="$(pwd)/go"
+    echo "PWD is $(pwd)"
     mkdir -p "$(pwd)/go"
     go env -w GOPATH="$(pwd)/go"
     mkdir -p $GOPATH/src/github.com/a-castellano
