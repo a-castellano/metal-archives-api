@@ -13,7 +13,7 @@ func main() {
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
-	data, err := artists.SearchArtist(client, "River")
+	data, err := artists.SearchArtist(client, "Cannibal corpse")
 	if err != nil {
 		log.Fatal(err)
 	} else {

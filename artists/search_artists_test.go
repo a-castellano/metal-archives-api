@@ -146,6 +146,10 @@ func TestSearchArtistErrored(t *testing.T) {
 	if data.URL != "" {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
+
+	if data.ID != 0 {
+		t.Errorf("Retrieved artist id should be 0.")
+	}
 }
 
 func TestSearchArtistNotFound(t *testing.T) {
@@ -176,6 +180,10 @@ func TestSearchArtistNotFound(t *testing.T) {
 
 	if data.URL != "" {
 		t.Errorf("Retrieved artist URL should be empty.")
+	}
+
+	if data.ID != 0 {
+		t.Errorf("Retrieved artist id should be 0.")
 	}
 }
 
@@ -223,6 +231,11 @@ func TestSearchArtistNotMatch(t *testing.T) {
 	if data.URL != "" {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
+
+	if data.ID != 0 {
+		t.Errorf("Retrieved artist id should be 0.")
+	}
+
 }
 
 func TestSearchArtistMatch(t *testing.T) {
@@ -265,6 +278,10 @@ func TestSearchArtistMatch(t *testing.T) {
 	if data.URL != "https://www.metal-archives.com/bands/Burzum/88" {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
 	}
+
+	if data.ID != 88 {
+		t.Errorf("Retrieved artist id should be 88.")
+	}
 }
 
 func TestSearchArtistMatchLowercase(t *testing.T) {
@@ -306,5 +323,9 @@ func TestSearchArtistMatchLowercase(t *testing.T) {
 
 	if data.URL != "https://www.metal-archives.com/bands/Burzum/88" {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
+	}
+
+	if data.ID != 88 {
+		t.Errorf("Retrieved artist id should be 88.")
 	}
 }

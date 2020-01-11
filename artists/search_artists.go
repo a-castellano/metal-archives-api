@@ -21,6 +21,7 @@ type SearchAjaxArtists struct {
 type SearchArtistsData struct {
 	Name string
 	URL  string
+	ID   int
 }
 
 func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
