@@ -68,7 +68,7 @@ func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) 
 		re := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 		for _, foundArtistData := range data {
 			match := re.FindAllStringSubmatch(foundArtistData[0], -1)
-			if match[0][2] == artist {
+			if strings.ToLower(match[0][2]) == strings.ToLower(artist) {
 				artistData.URL = match[0][1]
 				artistData.Name = match[0][2]
 				found = true

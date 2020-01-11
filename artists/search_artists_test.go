@@ -266,3 +266,45 @@ func TestSearchArtistMatch(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
 	}
 }
+
+func TestSearchArtistMatchLowercase(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 3,
+	"iTotalDisplayRecords": 3,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Burzum/88\">Burzum</a>  <!-- 11.432714 -->" ,
+			"Black Metal, Ambient" ,
+			"Norway"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Down_to_Burzum/3540435931\">Down to Burzum</a>  <!-- 5.716357 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Krimparturr/21151\">Krimparturr</a> (<strong>a.k.a.</strong> Krimpartûrr Bürzum Shi-Hai) <!-- 1.2505064 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				]
+}
+
+	`))}}}
+
+	data, err := SearchArtist(client, "burzum")
+
+	if err != nil {
+		t.Errorf("TestSearchArtistMatchLowercase shouldn't fail.")
+	}
+
+	if data.Name != "Burzum" {
+		t.Errorf("Retrieved artist name should be 'Burzum'.")
+	}
+
+	if data.URL != "https://www.metal-archives.com/bands/Burzum/88" {
+		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
+	}
+}
