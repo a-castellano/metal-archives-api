@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"github.com/a-castellano/metal-archives-wrapper/artists"
 	"log"
+	"net/http"
+	"time"
 )
 
 func main() {
-	data, err := artists.SearchArtist("Burzum")
+	client := http.Client{
+		Timeout: time.Second * 5, // Maximum of 5 secs
+	}
+
+	data, err := artists.SearchArtist(client, "Nile")
 	if err != nil {
 		log.Fatal(err)
 	} else {

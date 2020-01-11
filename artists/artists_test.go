@@ -16,7 +16,7 @@ func (rtm *RoundTripperMock) RoundTrip(*http.Request) (*http.Response, error) {
 	return rtm.Response, rtm.RespErr
 }
 
-func TestClientNoArtists(t *testing.T) {
+func TestSearchArtistAjaxNoArtists(t *testing.T) {
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 {
 	"error": "",
@@ -40,7 +40,7 @@ func TestClientNoArtists(t *testing.T) {
 
 }
 
-func TestBrokenJson(t *testing.T) {
+func TestSearchArtistAjaxBrokenJson(t *testing.T) {
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 {
 	"error": "",
@@ -55,5 +55,126 @@ func TestBrokenJson(t *testing.T) {
 
 	if err == nil {
 		t.Errorf("TestBrokenJson should fail because JSON response is broken.")
+	}
+}
+
+func TestSearchArtistAjaxOneArtist(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 1,
+	"iTotalDisplayRecords": 1,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Satyricon/341\">Satyricon</a>  <!-- 12.348988 -->" ,
+			"Black Metal" ,
+			"Norway"     		]
+				]
+}
+	`))}}}
+
+	data, err := searchArtistAjax(client, "AnyArtist")
+
+	if err != nil {
+		t.Errorf("TestClientNoArtists shouldn't fail.")
+	}
+
+	if len(data) != 1 {
+		t.Errorf("TestClientNoArtists should return one entry only.")
+	}
+}
+
+func TestSearchArtistAjaxMoreThanOneArtist(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 3,
+	"iTotalDisplayRecords": 3,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Burzum/88\">Burzum</a>  <!-- 11.432714 -->" ,
+			"Black Metal, Ambient" ,
+			"Norway"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Down_to_Burzum/3540435931\">Down to Burzum</a>  <!-- 5.716357 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Krimparturr/21151\">Krimparturr</a> (<strong>a.k.a.</strong> Krimpartûrr Bürzum Shi-Hai) <!-- 1.2505064 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				]
+}
+	`))}}}
+
+	data, err := searchArtistAjax(client, "AnyArtist")
+
+	if err != nil {
+		t.Errorf("TestSearchArtistAjaxMoreThanOneArtist shouldn't fail.")
+	}
+
+	if len(data) != 3 {
+		t.Errorf("TestSearchArtistAjaxMoreThanOneArtist should return three entries.")
+	}
+}
+
+func TestSearchArtistErrored(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+}
+	`))}}}
+
+	data, err := SearchArtist(client, "AnyArtist")
+
+	if err == nil {
+		t.Errorf("TestSearchArtistAjaxMoreThanOneArtist should fail.")
+	}
+
+	if data.Name != "" {
+		t.Errorf("Retrieved artist name should be empty.")
+	}
+
+	if data.URL != "" {
+		t.Errorf("Retrieved artist URL should be empty.")
+	}
+}
+
+func TestSearchArtistNotFound(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+		]
+}
+	`))}}}
+
+	data, err := SearchArtist(client, "AnyArtist")
+
+	if err == nil {
+		t.Errorf("TestSearchArtistNotFound should fail.")
+	}
+
+	if err.Error() != "No artist was found." {
+		t.Errorf("TestSearchArtistNotFound error should be 'No artist was found.'")
+	}
+
+	if data.Name != "" {
+		t.Errorf("Retrieved artist name should be empty.")
+	}
+
+	if data.URL != "" {
+		t.Errorf("Retrieved artist URL should be empty.")
 	}
 }

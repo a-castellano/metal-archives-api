@@ -2,12 +2,12 @@ package artists
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 	"strings"
-	"time"
 )
 
 type SearchAjaxArtists struct {
@@ -40,15 +40,8 @@ func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 	if getErr != nil {
 		return searchArtistData, getErr
 	}
-	//fmt.Println("_____")
-	//fmt.Println(res)
-	//fmt.Println("_____")
 
 	body, readErr := ioutil.ReadAll(res.Body)
-	//fmt.Println("_____")
-	//s := string(body)
-	//fmt.Println(s) // ABC€�
-	//fmt.Println("_____")
 	if readErr != nil {
 		return searchArtistData, readErr
 	}
@@ -61,27 +54,32 @@ func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 	return searchArtistData, nil
 }
 
-func SearchArtist(artist string) (SearchArtistsData, error) {
+func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) {
 
 	var artistData SearchArtistsData
-	client := http.Client{
-		Timeout: time.Second * 5, // Maximum of 5 secs
-	}
 
 	data, err := searchArtistAjax(client, artist)
+
+	var found bool = false
 
 	if err != nil {
 		return artistData, err
 	} else {
-		fmt.Println(data)
 		re := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 		for _, foundArtistData := range data {
-			fmt.Println(foundArtistData)
 			match := re.FindAllStringSubmatch(foundArtistData[0], -1)
-			fmt.Println("_")
-			fmt.Println(match[0][1])
-			fmt.Println(match[0][2])
+			if match[0][2] == artist {
+				artistData.URL = match[0][1]
+				artistData.Name = match[0][2]
+				found = true
+				break
+			}
 		}
 	}
+
+	if !found {
+		return artistData, errors.New("No artist was found.")
+	}
+
 	return artistData, nil
 }
