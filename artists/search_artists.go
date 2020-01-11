@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -59,6 +60,9 @@ func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) 
 
 	var artistData SearchArtistsData
 
+	artistDatare := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
+	artistIDre := regexp.MustCompile(`^[^\/]*\/\/[^\/]*\/[^\/]*\/[^\/]*\/([0-9]*)`)
+
 	data, err := searchArtistAjax(client, artist)
 
 	var found bool = false
@@ -66,12 +70,13 @@ func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) 
 	if err != nil {
 		return artistData, err
 	} else {
-		re := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 		for _, foundArtistData := range data {
-			match := re.FindAllStringSubmatch(foundArtistData[0], -1)
+			match := artistDatare.FindAllStringSubmatch(foundArtistData[0], -1)
 			if strings.ToLower(match[0][2]) == strings.ToLower(artist) {
 				artistData.URL = match[0][1]
 				artistData.Name = match[0][2]
+				IDmatch := artistIDre.FindAllStringSubmatch(artistData.URL, -1)
+				artistData.ID, _ = strconv.Atoi(IDmatch[0][1])
 				found = true
 				break
 			}
