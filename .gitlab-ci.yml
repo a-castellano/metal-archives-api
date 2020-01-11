@@ -1,5 +1,4 @@
-
-image: daedalusproject/base_golang_1_13:latest
+image: daedalusproject/base_golang_1_13:202001111126
 
 stages:
     - dep
