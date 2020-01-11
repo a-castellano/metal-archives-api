@@ -6,6 +6,7 @@ stages:
     - test
 
 before_script:
+  - export CC=/usr/bin/clang
   - export GOPATH="$(pwd)/go"
   - mkdir -p "$(pwd)/go"
   - go env -w GOPATH="$(pwd)/go"
