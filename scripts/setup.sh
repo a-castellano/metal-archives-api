@@ -11,4 +11,5 @@ else
     mkdir -p $GOPATH/src/github.com/a-castellano
     ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/metal-archives-wrapper
     cd $GOPATH/src/github.com/a-castellano/metal-archives-wrapper
+    echo "Current folder - $(pwd)"
 fi
