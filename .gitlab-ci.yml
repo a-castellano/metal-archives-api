@@ -50,6 +50,7 @@ code_coverage:
     paths:
       - coverage.html
     expire_in: 1 hour
+  coverage: /total:\s+.+\s(\d+\.\d+?)%$/
 
 code_coverage_report:
   stage: test
