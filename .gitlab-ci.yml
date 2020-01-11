@@ -67,7 +67,7 @@ lint_code:
 pages:
   stage: deploy
   script:
-  - echo 'Nothing to do...'
+  - cp coverage.hmtl public/
   artifacts:
     paths:
     - public
