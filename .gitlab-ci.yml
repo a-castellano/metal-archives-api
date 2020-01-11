@@ -3,6 +3,7 @@ image: daedalusproject/base_golang_1_13:202001111126
 stages:
     - dep
     - test
+    - deploy
 
 before_script:
   - export CC=/usr/bin/clang
@@ -62,3 +63,11 @@ lint_code:
   stage: test
   script:
     - make lint
+
+pages:
+  stage: deploy
+  script:
+  - echo 'Nothing to do...'
+  artifacts:
+    paths:
+    - public
