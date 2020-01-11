@@ -178,3 +178,91 @@ func TestSearchArtistNotFound(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
 }
+
+func TestSearchArtistNotMatch(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 3,
+	"iTotalDisplayRecords": 3,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Burzum/88\">Burzum</a>  <!-- 11.432714 -->" ,
+			"Black Metal, Ambient" ,
+			"Norway"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Down_to_Burzum/3540435931\">Down to Burzum</a>  <!-- 5.716357 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Krimparturr/21151\">Krimparturr</a> (<strong>a.k.a.</strong> Krimpartûrr Bürzum Shi-Hai) <!-- 1.2505064 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				]
+}
+
+	`))}}}
+
+	data, err := SearchArtist(client, "AnyArtist")
+
+	if err == nil {
+		t.Errorf("TestSearchArtistNotMatch should fail.")
+	}
+
+	if err.Error() != "No artist was found." {
+		t.Errorf("TestSearchArtistNotMatch error should be 'No artist was found.'")
+	}
+
+	if data.Name != "" {
+		t.Errorf("Retrieved artist name should be empty.")
+	}
+
+	if data.URL != "" {
+		t.Errorf("Retrieved artist URL should be empty.")
+	}
+}
+
+func TestSearchArtistMatch(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 3,
+	"iTotalDisplayRecords": 3,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Burzum/88\">Burzum</a>  <!-- 11.432714 -->" ,
+			"Black Metal, Ambient" ,
+			"Norway"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Down_to_Burzum/3540435931\">Down to Burzum</a>  <!-- 5.716357 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Krimparturr/21151\">Krimparturr</a> (<strong>a.k.a.</strong> Krimpartûrr Bürzum Shi-Hai) <!-- 1.2505064 -->" ,
+			"Black Metal" ,
+			"Brazil"     		]
+				]
+}
+
+	`))}}}
+
+	data, err := SearchArtist(client, "Burzum")
+
+	if err != nil {
+		t.Errorf("TestSearchArtistMatch shouldn't fail.")
+	}
+
+	if data.Name != "Burzum" {
+		t.Errorf("Retrieved artist name should be 'Burzum'.")
+	}
+
+	if data.URL != "https://www.metal-archives.com/bands/Burzum/88" {
+		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
+	}
+}
