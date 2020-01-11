@@ -66,8 +66,9 @@ lint_code:
 
 pages:
   stage: deploy
+  image: daedalusproject/base_docker:202001111126
   script:
-  - cp coverage.hmtl public/
+  - cp coverage.html public/
   artifacts:
     paths:
     - public
