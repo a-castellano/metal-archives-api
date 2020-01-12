@@ -150,6 +150,14 @@ func TestSearchArtistErrored(t *testing.T) {
 	if data.ID != 0 {
 		t.Errorf("Retrieved artist id should be 0.")
 	}
+
+	if data.Genre != "" {
+		t.Errorf("Retrieved artist Genre should be empty.")
+	}
+
+	if data.Country != "" {
+		t.Errorf("Retrieved artist Country should be empty.")
+	}
 }
 
 func TestSearchArtistNotFound(t *testing.T) {
@@ -184,6 +192,14 @@ func TestSearchArtistNotFound(t *testing.T) {
 
 	if data.ID != 0 {
 		t.Errorf("Retrieved artist id should be 0.")
+	}
+
+	if data.Genre != "" {
+		t.Errorf("Retrieved artist Genre should be empty.")
+	}
+
+	if data.Country != "" {
+		t.Errorf("Retrieved artist Country should be empty.")
 	}
 }
 
@@ -236,6 +252,14 @@ func TestSearchArtistNotMatch(t *testing.T) {
 		t.Errorf("Retrieved artist id should be 0.")
 	}
 
+	if data.Genre != "" {
+		t.Errorf("Retrieved artist Genre should be empty.")
+	}
+
+	if data.Country != "" {
+		t.Errorf("Retrieved artist Country should be empty.")
+	}
+
 }
 
 func TestSearchArtistMatch(t *testing.T) {
@@ -281,6 +305,14 @@ func TestSearchArtistMatch(t *testing.T) {
 
 	if data.ID != 88 {
 		t.Errorf("Retrieved artist id should be 88.")
+	}
+
+	if data.Genre != "Black Metal, Ambient" {
+		t.Errorf("Retrieved artist Genre should be 'Black Metal, Ambient'.")
+	}
+
+	if data.Country != "Norway" {
+		t.Errorf("Retrieved artist Country should be 'Norway'.")
 	}
 }
 
@@ -328,4 +360,13 @@ func TestSearchArtistMatchLowercase(t *testing.T) {
 	if data.ID != 88 {
 		t.Errorf("Retrieved artist id should be 88.")
 	}
+
+	if data.Genre != "Black Metal, Ambient" {
+		t.Errorf("Retrieved artist Genre should be 'Black Metal, Ambient'.")
+	}
+
+	if data.Country != "Norway" {
+		t.Errorf("Retrieved artist Country should be 'Norway'.")
+	}
+
 }

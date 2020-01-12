@@ -20,9 +20,11 @@ type SearchAjaxArtists struct {
 }
 
 type SearchArtistsData struct {
-	Name string
-	URL  string
-	ID   int
+	Name    string
+	URL     string
+	ID      int
+	Genre   string
+	Country string
 }
 
 func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
@@ -75,6 +77,8 @@ func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) 
 			if strings.ToLower(match[0][2]) == strings.ToLower(artist) {
 				artistData.URL = match[0][1]
 				artistData.Name = match[0][2]
+				artistData.Genre = foundArtistData[1]
+				artistData.Country = foundArtistData[2]
 				IDmatch := artistIDre.FindAllStringSubmatch(artistData.URL, -1)
 				artistData.ID, _ = strconv.Atoi(IDmatch[0][1])
 				found = true
