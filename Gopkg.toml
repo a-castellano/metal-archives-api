@@ -24,3 +24,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/geziyor/geziyor"
+
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/net"

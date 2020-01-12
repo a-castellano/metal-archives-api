@@ -13,11 +13,13 @@ func main() {
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
-	data, extraData, err := artists.SearchArtist(client, "Hypocrisy")
+	data, extraData, err := artists.SearchArtist(client, "Iron Maiden")
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		fmt.Println(data)
-		fmt.Println(extraData)
+		fmt.Println("data: ", data)
+		fmt.Println("extraData: ", extraData)
+		records, _ := artists.GetArtistRecords(client, data)
+		fmt.Println("records", records)
 	}
 }
