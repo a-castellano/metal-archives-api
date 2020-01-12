@@ -133,7 +133,7 @@ func TestSearchArtistErrored(t *testing.T) {
 }
 	`))}}}
 
-	data, err := SearchArtist(client, "AnyArtist")
+	data, extraData, err := SearchArtist(client, "AnyArtist")
 
 	if err == nil {
 		t.Errorf("TestSearchArtistAjaxMoreThanOneArtist should fail.")
@@ -158,6 +158,10 @@ func TestSearchArtistErrored(t *testing.T) {
 	if data.Country != "" {
 		t.Errorf("Retrieved artist Country should be empty.")
 	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
+	}
 }
 
 func TestSearchArtistNotFound(t *testing.T) {
@@ -172,7 +176,7 @@ func TestSearchArtistNotFound(t *testing.T) {
 }
 	`))}}}
 
-	data, err := SearchArtist(client, "AnyArtist")
+	data, extraData, err := SearchArtist(client, "AnyArtist")
 
 	if err == nil {
 		t.Errorf("TestSearchArtistNotFound should fail.")
@@ -200,6 +204,10 @@ func TestSearchArtistNotFound(t *testing.T) {
 
 	if data.Country != "" {
 		t.Errorf("Retrieved artist Country should be empty.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
 	}
 }
 
@@ -230,7 +238,7 @@ func TestSearchArtistNotMatch(t *testing.T) {
 
 	`))}}}
 
-	data, err := SearchArtist(client, "AnyArtist")
+	data, extraData, err := SearchArtist(client, "AnyArtist")
 
 	if err == nil {
 		t.Errorf("TestSearchArtistNotMatch should fail.")
@@ -258,6 +266,10 @@ func TestSearchArtistNotMatch(t *testing.T) {
 
 	if data.Country != "" {
 		t.Errorf("Retrieved artist Country should be empty.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
 	}
 
 }
@@ -289,7 +301,7 @@ func TestSearchArtistMatch(t *testing.T) {
 
 	`))}}}
 
-	data, err := SearchArtist(client, "Burzum")
+	data, extraData, err := SearchArtist(client, "Burzum")
 
 	if err != nil {
 		t.Errorf("TestSearchArtistMatch shouldn't fail.")
@@ -313,6 +325,10 @@ func TestSearchArtistMatch(t *testing.T) {
 
 	if data.Country != "Norway" {
 		t.Errorf("Retrieved artist Country should be 'Norway'.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
 	}
 }
 
@@ -343,7 +359,7 @@ func TestSearchArtistMatchLowercase(t *testing.T) {
 
 	`))}}}
 
-	data, err := SearchArtist(client, "burzum")
+	data, extraData, err := SearchArtist(client, "burzum")
 
 	if err != nil {
 		t.Errorf("TestSearchArtistMatchLowercase shouldn't fail.")
@@ -367,6 +383,98 @@ func TestSearchArtistMatchLowercase(t *testing.T) {
 
 	if data.Country != "Norway" {
 		t.Errorf("Retrieved artist Country should be 'Norway'.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
+	}
+
+}
+
+func TestSearchArtistMultipleMatches(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 5,
+	"iTotalDisplayRecords": 5,
+	"sEcho": 0,
+	"aaData": [
+				[
+			"<a href=\"https://www.metal-archives.com/bands/Hypocrisy/96\">Hypocrisy</a>  <!-- 10.740315 -->" ,
+			"Death Metal (early), Melodic Death Metal (later)" ,
+			"Sweden"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Hypocrisy/56165\">Hypocrisy</a>  <!-- 10.740315 -->" ,
+			"Power/Thrash Metal" ,
+			"United States"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Sermon_of_Hypocrisy/7033\">Sermon of Hypocrisy</a>  <!-- 5.3701577 -->" ,
+			"Black Metal" ,
+			"United Kingdom"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/The_Polo_Hypocrisy/47897\">The Polo Hypocrisy</a> (<strong>a.k.a.</strong> T.P.H.) <!-- 5.3701577 -->" ,
+			"Melodic Death Metal with Hardcore elements" ,
+			"Canada"     		]
+				,
+						[
+			"<a href=\"https://www.metal-archives.com/bands/Torture_of_Hypocrisy/3540316100\">Torture of Hypocrisy</a> (<strong>a.k.a.</strong> ToH) <!-- 5.3701577 -->" ,
+			"Technical Thrash Metal" ,
+			"Poland"     		]
+				]
+}
+	`))}}}
+
+	data, extraData, err := SearchArtist(client, "Hypocrisy")
+
+	if err != nil {
+		t.Errorf("TestSearchArtistMultipleMatches shouldn't fail.")
+	}
+
+	if data.Name != "Hypocrisy" {
+		t.Errorf("Retrieved artist name should be 'Hypocrisy'.")
+	}
+
+	if data.URL != "https://www.metal-archives.com/bands/Hypocrisy/96" {
+		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Hypocrisy/96'.")
+	}
+
+	if data.ID != 96 {
+		t.Errorf("Retrieved artist id should be 96.")
+	}
+
+	if data.Genre != "Death Metal (early), Melodic Death Metal (later)" {
+		t.Errorf("Retrieved artist Genre should be 'Death Metal (early), Melodic Death Metal (later)'.")
+	}
+
+	if data.Country != "Sweden" {
+		t.Errorf("Retrieved artist Country should be 'Sweden'.")
+	}
+
+	if len(extraData) != 1 {
+		t.Errorf("Retrieved extra data should have one extra item only.")
+	}
+
+	if extraData[0].Name != "Hypocrisy" {
+		t.Errorf("Retrieved artist name should be 'Hypocrisy'.")
+	}
+
+	if extraData[0].URL != "https://www.metal-archives.com/bands/Hypocrisy/56165" {
+		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Hypocrisy/56165'.")
+	}
+
+	if extraData[0].ID != 56165 {
+		t.Errorf("Retrieved artist id should be 56165.")
+	}
+
+	if extraData[0].Genre != "Power/Thrash Metal" {
+		t.Errorf("Retrieved artist Genre should be 'Power/Thrash Metal'.")
+	}
+
+	if extraData[0].Country != "United States" {
+		t.Errorf("Retrieved artist Country should be 'United States'.")
 	}
 
 }

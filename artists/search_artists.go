@@ -19,7 +19,7 @@ type SearchAjaxArtists struct {
 	Data                [][]string `json:"aaData"`
 }
 
-type SearchArtistsData struct {
+type SearchArtistData struct {
 	Name    string
 	URL     string
 	ID      int
@@ -49,6 +49,7 @@ func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 	if readErr != nil {
 		return searchArtistData, readErr
 	}
+
 	searchArtist := SearchAjaxArtists{}
 	jsonErr := json.Unmarshal(body, &searchArtist)
 	if jsonErr != nil {
@@ -58,9 +59,10 @@ func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 	return searchArtistData, nil
 }
 
-func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) {
+func SearchArtist(client http.Client, artist string) (SearchArtistData, []SearchArtistData, error) {
 
-	var artistData SearchArtistsData
+	var artistData SearchArtistData
+	var artistExtraData []SearchArtistData
 
 	artistDatare := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 	artistIDre := regexp.MustCompile(`^[^\/]*\/\/[^\/]*\/[^\/]*\/[^\/]*\/([0-9]*)`)
@@ -70,26 +72,36 @@ func SearchArtist(client http.Client, artist string) (SearchArtistsData, error) 
 	var found bool = false
 
 	if err != nil {
-		return artistData, err
+		return artistData, artistExtraData, err
 	} else {
 		for _, foundArtistData := range data {
 			match := artistDatare.FindAllStringSubmatch(foundArtistData[0], -1)
 			if strings.ToLower(match[0][2]) == strings.ToLower(artist) {
-				artistData.URL = match[0][1]
-				artistData.Name = match[0][2]
-				artistData.Genre = foundArtistData[1]
-				artistData.Country = foundArtistData[2]
-				IDmatch := artistIDre.FindAllStringSubmatch(artistData.URL, -1)
-				artistData.ID, _ = strconv.Atoi(IDmatch[0][1])
-				found = true
-				break
+				if !found {
+					artistData.URL = match[0][1]
+					artistData.Name = match[0][2]
+					artistData.Genre = foundArtistData[1]
+					artistData.Country = foundArtistData[2]
+					IDmatch := artistIDre.FindAllStringSubmatch(artistData.URL, -1)
+					artistData.ID, _ = strconv.Atoi(IDmatch[0][1])
+					found = true
+				} else {
+					extraData := SearchArtistData{}
+					extraData.URL = match[0][1]
+					extraData.Name = match[0][2]
+					extraData.Genre = foundArtistData[1]
+					extraData.Country = foundArtistData[2]
+					IDmatch := artistIDre.FindAllStringSubmatch(extraData.URL, -1)
+					extraData.ID, _ = strconv.Atoi(IDmatch[0][1])
+					artistExtraData = append(artistExtraData, extraData)
+				}
 			}
 		}
 	}
 
 	if !found {
-		return artistData, errors.New("No artist was found.")
+		return artistData, artistExtraData, errors.New("No artist was found.")
 	}
 
-	return artistData, nil
+	return artistData, artistExtraData, nil
 }
