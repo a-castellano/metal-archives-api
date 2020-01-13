@@ -13,7 +13,7 @@ func main() {
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
-	data, extraData, err := artists.SearchArtist(client, "Bölzer")
+	data, extraData, err := artists.SearchArtist(client, "Master Boot Record")
 	if err != nil {
 		log.Fatal(err)
 	} else {

@@ -121,4 +121,8 @@ func TestGetArtistRecords(t *testing.T) {
 		t.Errorf(`First Bölzer record URL is wrong.`)
 	}
 
+	if first_record.Type != Demo {
+		t.Errorf(`First Bölzer record URL is a demo.`)
+	}
+
 }

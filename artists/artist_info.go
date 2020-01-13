@@ -1,6 +1,7 @@
 package artists
 
 import (
+	"errors"
 	"fmt"
 	"golang.org/x/net/html"
 	"io/ioutil"
@@ -114,6 +115,10 @@ func GetArtistRecords(client http.Client, artistData SearchArtistData) ([]Record
 		}
 	}
 	f(doc, &records)
+
+	if len(records) == 0 {
+		return records, errors.New("No records were found.")
+	}
 
 	return records, nil
 }
