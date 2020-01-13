@@ -7,15 +7,6 @@ import (
 	"testing"
 )
 
-type RoundTripperMock struct {
-	Response *http.Response
-	RespErr  error
-}
-
-func (rtm *RoundTripperMock) RoundTrip(*http.Request) (*http.Response, error) {
-	return rtm.Response, rtm.RespErr
-}
-
 func TestSearchArtistAjaxNoArtists(t *testing.T) {
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 {
