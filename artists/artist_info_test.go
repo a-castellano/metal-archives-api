@@ -7,6 +7,25 @@ import (
 	"testing"
 )
 
+func TestGetArtistRecordBroken(t *testing.T) {
+
+	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: 3540351548, Genre: "Black/Death Metal", Country: "Switzerland"}
+
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+not html code
+	`))}}}
+
+	records, err := GetArtistRecords(client, artistData)
+
+	if err == nil {
+		t.Errorf("TestGetArtistRecordBroken should fail.")
+	}
+
+	if len(records) != 0 {
+		t.Errorf("Number of retrieved records length in TestGetArtistRecordBroken should be 0.")
+	}
+}
+
 func TestGetArtistRecords(t *testing.T) {
 
 	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: 3540351548, Genre: "Black/Death Metal", Country: "Switzerland"}
@@ -83,4 +102,23 @@ func TestGetArtistRecords(t *testing.T) {
 	if len(records) != 6 {
 		t.Errorf("Number of retrieved records length should be 6.")
 	}
+
+	first_record := records[0]
+
+	if first_record.Name != "Roman Acupuncture" {
+		t.Errorf("First Bölzer record should be 'Roman Acupuncture'.")
+	}
+
+	if first_record.ID != 350987 {
+		t.Errorf("First Bölzer record should have 350987 as ID.")
+	}
+
+	if first_record.Year != 2012 {
+		t.Errorf("First Bölzer record was published in 2012.")
+	}
+
+	if first_record.URL != `https://www.metal-archives.com/albums/B%C3%B6lzer/Roman_Acupuncture/350987` {
+		t.Errorf(`First Bölzer record URL is wrong.`)
+	}
+
 }
