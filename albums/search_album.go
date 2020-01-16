@@ -1,61 +1,62 @@
-package artists
+package albums
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/a-castellano/metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
-	"regexp"
-	"strconv"
 	"strings"
 )
 
-type SearchArtistData struct {
-	Name    string
-	URL     string
-	ID      int
-	Genre   string
-	Country string
+type SearchAlbumData struct {
+	Name     string
+	URL      string
+	ID       int
+	Year     int
+	Artist   string
+	ArtistID int
 }
 
-func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
+func searchAlbumAjax(client http.Client, album string) ([][]string, error) {
 
-	var searchArtistData [][]string
-	artistString := strings.Replace(artist, " ", "+", -1)
-	url := fmt.Sprintf("https://www.metal-archives.com/search/ajax-band-search/?field=name&query=%s", artistString)
+	var searchAlbumData [][]string
+	albumString := strings.Replace(album, " ", "+", -1)
+	url := fmt.Sprintf("https://www.metal-archives.com/search/ajax-album-search/?field=title&query=%s", albumString)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		return searchArtistData, err
+		return searchAlbumData, err
 	}
 
 	req.Header.Set("User-Agent", "https://github.com/a-castellano/metal-archives-wrapper")
 
 	res, getErr := client.Do(req)
 	if getErr != nil {
-		return searchArtistData, getErr
+		return searchAlbumData, getErr
 	}
 
 	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
-		return searchArtistData, readErr
+		return searchAlbumData, readErr
 	}
 
-	searchArtist := types.SearchAjaxData{}
-	jsonErr := json.Unmarshal(body, &searchArtist)
+	s := string(body)
+	fmt.Println(s)
+
+	searchAlbum := types.SearchAjaxData{}
+	jsonErr := json.Unmarshal(body, &searchAlbum)
 	if jsonErr != nil {
-		return searchArtistData, jsonErr
+		return searchAlbumData, jsonErr
 	}
-	searchArtistData = searchArtist.Data
-	return searchArtistData, nil
+	searchAlbumData = searchAlbum.Data
+	return searchAlbumData, nil
 }
 
-func SearchArtist(client http.Client, artist string) (SearchArtistData, []SearchArtistData, error) {
+func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlbumData, error) {
 
-	var artistData SearchArtistData
-	var artistExtraData []SearchArtistData
+	var albumData SearchAlbumData
+	var albumExtraData []SearchAlbumData
 
 	artistDatare := regexp.MustCompile(`^<a href=\"([^\"]+)\">([^<]+)</a>`)
 	artistIDre := regexp.MustCompile(`^[^\/]*\/\/[^\/]*\/[^\/]*\/[^\/]*\/([0-9]*)`)
