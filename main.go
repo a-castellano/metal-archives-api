@@ -33,16 +33,18 @@ func findAlbum() {
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
-	data, err := albums.SearchAlbumAjax(client, "Agent Orange")
+	data, extraData, err := albums.SearchAlbum(client, "Agent Orange")
 	if err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Println("data: ", data)
+		fmt.Println("extra: ", extraData)
 	}
 
 }
 
 func main() {
 	findArtist()
+	fmt.Println("_______________________________________")
 	findAlbum()
 }

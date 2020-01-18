@@ -3,6 +3,7 @@ package artists
 import (
 	"errors"
 	"fmt"
+	"github.com/a-castellano/metal-archives-wrapper/types"
 	"golang.org/x/net/html"
 	"io/ioutil"
 	"log"
@@ -12,27 +13,12 @@ import (
 	"strings"
 )
 
-type RecordType int
-
-const (
-	FullLength RecordType = 1 << iota
-	Demo
-	EP
-	Compilation
-	Live
-	BoxedSet
-	Single
-	Video
-	Split
-	Other
-)
-
 type Record struct {
 	Name string
 	ID   int
 	Year int
 	URL  string
-	Type RecordType
+	Type types.RecordType
 }
 
 func readRecord(n *html.Node) Record {
@@ -48,26 +34,7 @@ func readRecord(n *html.Node) Record {
 	newRecord.ID, _ = strconv.Atoi(match[0][1])
 	RecordTypeInfo := n.FirstChild.NextSibling.NextSibling.NextSibling.FirstChild
 
-	switch RecordTypeInfo.Data {
-	case "Full-length":
-		newRecord.Type = FullLength
-	case "EP":
-		newRecord.Type = EP
-	case "Compilation":
-		newRecord.Type = Compilation
-	case "Demo":
-		newRecord.Type = Demo
-	case "Video":
-		newRecord.Type = Video
-	case "Single":
-		newRecord.Type = Single
-	case "Live album":
-		newRecord.Type = Live
-	case "Split":
-		newRecord.Type = Split
-	default:
-		newRecord.Type = Other
-	}
+	newRecord.Type = types.SelectRecordType(RecordTypeInfo.Data)
 
 	RecordYearInfo := n.FirstChild.NextSibling.NextSibling.NextSibling.NextSibling.NextSibling.FirstChild
 	newRecord.Year, _ = strconv.Atoi(RecordYearInfo.Data)
