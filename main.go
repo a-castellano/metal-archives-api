@@ -33,14 +33,14 @@ func findAlbum() {
 		Timeout: time.Second * 5, // Maximum of 5 secs
 	}
 
-	data, extraData, err := albums.SearchAlbum(client, "Agent Orange")
+	data, extraData, err := albums.SearchAlbum(client, "Soma")
 	if err != nil {
 		log.Fatal(err)
 	} else {
+		data.Tracks, data.Cover, _ = albums.GetAlbumInfo(client, data)
 		fmt.Println("data: ", data)
 		fmt.Println("extra: ", extraData)
 	}
-
 }
 
 func main() {
