@@ -73,7 +73,6 @@ func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlb
 	} else {
 		for _, foundAlbumData := range data {
 			albumMatch := albumDatare.FindAllStringSubmatch(foundAlbumData[1], -1)
-			fmt.Println(albumMatch[0])
 			if strings.ToLower(albumMatch[0][2]) == strings.ToLower(album) {
 				if found == false {
 					found = true
