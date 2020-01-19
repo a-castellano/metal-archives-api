@@ -2,6 +2,7 @@ package albums
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/a-castellano/metal-archives-wrapper/types"
 	"io/ioutil"
@@ -107,6 +108,10 @@ func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlb
 				}
 			}
 		}
+	}
+
+	if !found {
+		return albumData, albumExtraData, errors.New("No album was found.")
 	}
 
 	return albumData, albumExtraData, nil
