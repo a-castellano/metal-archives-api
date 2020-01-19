@@ -2,6 +2,7 @@ package albums
 
 import (
 	"bytes"
+	"github.com/a-castellano/metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -190,4 +191,65 @@ func TestSearchAlbumNotFound(t *testing.T) {
 	if len(extraData) != 0 {
 		t.Errorf("Retrieved extra data should be empty.")
 	}
+}
+
+func TestSearchAlbumOneAlbumFoundd(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 1,
+	"iTotalDisplayRecords": 1,
+	"sEcho": 0,
+	"aaData": [
+		[
+			"<a href=\"https://www.metal-archives.com/bands/Cannibal_Corpse/186\" title=\"Cannibal Corpse (US)\">Cannibal Corpse</a>",
+			"<a href=\"https://www.metal-archives.com/albums/Cannibal_Corpse/Eaten_Back_to_Life/778\">Eaten Back to Life</a> <!-- 1.8124998 -->" ,
+			"Full-length"      ,
+			"August 16th, 1990 <!-- 1990-08-16 -->"     		]
+		]
+}
+	`))}}}
+
+	data, extraData, err := SearchAlbum(client, "Eaten Back to Life")
+
+	if err != nil {
+		t.Errorf("TestSearchAlbumOneAlbumFoundd shouldn't fail.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
+	}
+
+	if data.Name != "Eaten Back to Life" {
+		t.Errorf("Album name should be 'Eaten Back to Life', not %s.", data.Name)
+	}
+
+	if data.URL != "https://www.metal-archives.com/albums/Cannibal_Corpse/Eaten_Back_to_Life/778" {
+		t.Errorf("Album URL should be 'https://www.metal-archives.com/albums/Cannibal_Corpse/Eaten_Back_to_Life/778', not %s.", data.URL)
+	}
+
+	if data.ID != 778 {
+		t.Errorf("Album ID should be 778, not %d.", data.ID)
+	}
+
+	if data.Year != 1990 {
+		t.Errorf("Album Year should be 1990, not %d.", data.Year)
+	}
+
+	if data.Artist != "Cannibal Corpse" {
+		t.Errorf("Album Artist should be 'Cannibal_Corpse', not %s.", data.Artist)
+	}
+
+	if data.ArtistID != 186 {
+		t.Errorf("Album ArtistID should be 186, not %d.", data.ArtistID)
+	}
+
+	if data.ArtistURL != "https://www.metal-archives.com/bands/Cannibal_Corpse/186" {
+		t.Errorf("Album ArtistID should be 'https://www.metal-archives.com/bands/Cannibal_Corpse/186', not %s.", data.ArtistURL)
+	}
+
+	if data.Type != types.FullLength {
+		t.Errorf("Album Type should be %dd, not %d.", types.FullLength, data.Type)
+	}
+
 }
