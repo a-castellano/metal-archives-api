@@ -32,36 +32,55 @@ func readTrack(n *html.Node) Track {
 	return track
 }
 
-func GetAlbumRecords(client http.Client, recordData SearchAlbumData) ([]Track, error) {
+func getCoverURL(n *html.Node) string {
+	var cover string
+
+	coverURL := n.FirstChild.NextSibling.Attr[3].Val
+	stripedCover := strings.Split(coverURL, "?")
+
+	cover = stripedCover[0]
+
+	return cover
+}
+
+func GetAlbumInfo(client http.Client, recordData SearchAlbumData) ([]Track, string, error) {
+
 	var albumTracks []Track
+	var coverURL string
 
 	req, err := http.NewRequest(http.MethodGet, recordData.URL, nil)
 	if err != nil {
-		return albumTracks, err
+		return albumTracks, coverURL, err
 	}
 
 	req.Header.Set("User-Agent", "https://github.com/a-castellano/metal-archives-wrapper")
 
 	res, getErr := client.Do(req)
 	if getErr != nil {
-		return albumTracks, err
+		return albumTracks, coverURL, err
 	}
 
 	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
-		return albumTracks, err
+		return albumTracks, coverURL, err
 	}
 	stringBody := string(body)
 
 	doc, err := html.Parse(strings.NewReader(stringBody))
 	if err != nil {
-		return albumTracks, err
+		return albumTracks, coverURL, err
 	}
 	var f func(*html.Node, *[]Track)
 	f = func(n *html.Node, albumTracks *[]Track) {
 		if n.Type == html.ElementNode && n.Data == "td" {
 			if len(n.Attr) == 1 && n.Attr[0].Val == "wrapWords" {
 				*albumTracks = append(*albumTracks, readTrack(n))
+			}
+		} else {
+			if n.Type == html.ElementNode && n.Data == "div" {
+				if len(n.Attr) == 1 && n.Attr[0].Val == "album_img" {
+					coverURL = getCoverURL(n)
+				}
 			}
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
@@ -70,5 +89,5 @@ func GetAlbumRecords(client http.Client, recordData SearchAlbumData) ([]Track, e
 	}
 	f(doc, &albumTracks)
 
-	return albumTracks, nil
+	return albumTracks, coverURL, nil
 }

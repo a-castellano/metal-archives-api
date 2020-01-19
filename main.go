@@ -37,10 +37,10 @@ func findAlbum() {
 	if err != nil {
 		log.Fatal(err)
 	} else {
+		data.Tracks, data.Cover, _ = albums.GetAlbumInfo(client, data)
 		fmt.Println("data: ", data)
 		fmt.Println("extra: ", extraData)
 	}
-	fmt.Println(albums.GetAlbumRecords(client, data))
 }
 
 func main() {

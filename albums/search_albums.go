@@ -17,10 +17,12 @@ type SearchAlbumData struct {
 	URL       string
 	ID        int
 	Year      int
+	Cover     string
 	Artist    string
 	ArtistID  int
 	ArtistURL string
 	Type      types.RecordType
+	Tracks    []Track
 }
 
 func searchAlbumAjax(client http.Client, album string) ([][]string, error) {
