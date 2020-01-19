@@ -64,6 +64,7 @@ func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlb
 	albumDatare := regexp.MustCompile(`(?m)<a href="([^"]*)">([^<]*)</a> <!-- [0-9]*.[0-9]* -->$`)
 	artistURLre := regexp.MustCompile(`(?m)<a href="([^"]*)".*$`)
 	yearre := regexp.MustCompile(`(?m)([1|2][0-9]{3})`)
+	albumIDre := regexp.MustCompile(`(?m)[^/]*//[^/]*/[^/]*/[^/]*[^/]*/[^/]*/([0-9]*)`)
 
 	data, err := searchAlbumAjax(client, album)
 
@@ -80,6 +81,10 @@ func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlb
 					albumData.URL = albumMatch[0][1]
 					albumData.Name = albumMatch[0][2]
 
+					albumIDMatch := albumIDre.FindAllStringSubmatch(albumData.URL, -1)
+
+					albumData.ID, _ = strconv.Atoi(albumIDMatch[0][1])
+
 					artistMatch := artistDatare.FindAllStringSubmatch(foundAlbumData[0], -1)
 					albumData.ArtistID, _ = strconv.Atoi(artistMatch[0][1])
 					albumData.Artist = artistMatch[0][2]
@@ -93,6 +98,9 @@ func SearchAlbum(client http.Client, album string) (SearchAlbumData, []SearchAlb
 					var extraAlbumData SearchAlbumData
 					extraAlbumData.URL = albumMatch[0][1]
 					extraAlbumData.Name = albumMatch[0][2]
+
+					albumIDMatch := albumIDre.FindAllStringSubmatch(extraAlbumData.URL, -1)
+					extraAlbumData.ID, _ = strconv.Atoi(albumIDMatch[0][1])
 
 					artistMatch := artistDatare.FindAllStringSubmatch(foundAlbumData[0], -1)
 					extraAlbumData.ArtistID, _ = strconv.Atoi(artistMatch[0][1])
