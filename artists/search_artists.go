@@ -4,20 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/a-castellano/metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
 )
-
-type SearchAjaxArtists struct {
-	Error               string     `json:"error"`
-	TotalRecords        int        `json:"iTotalRecords"`
-	TotalDisplayRecords int        `json:"iTotalDisplayRecords"`
-	Echo                int        `json:"sEcho"`
-	Data                [][]string `json:"aaData"`
-}
 
 type SearchArtistData struct {
 	Name    string
@@ -50,7 +43,7 @@ func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 		return searchArtistData, readErr
 	}
 
-	searchArtist := SearchAjaxArtists{}
+	searchArtist := types.SearchAjaxData{}
 	jsonErr := json.Unmarshal(body, &searchArtist)
 	if jsonErr != nil {
 		return searchArtistData, jsonErr

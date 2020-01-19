@@ -2,6 +2,7 @@ package artists
 
 import (
 	"bytes"
+	"github.com/a-castellano/metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -121,7 +122,7 @@ func TestGetArtistRecords(t *testing.T) {
 		t.Errorf(`First Bölzer record URL is wrong.`)
 	}
 
-	if first_record.Type != Demo {
+	if first_record.Type != types.Demo {
 		t.Errorf(`First Bölzer record URL is a demo.`)
 	}
 
@@ -462,7 +463,7 @@ func TestGetArtistMoreRecords(t *testing.T) {
 
 	video_split := records[19]
 
-	if video_split.Type != Other {
+	if video_split.Type != types.Other {
 		t.Errorf(`'Nuclear Blast Festivals 2000' record type should be Other.`)
 	}
 }
