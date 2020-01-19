@@ -129,3 +129,65 @@ func TestSearchAlbumMoreThanOneAlbum(t *testing.T) {
 	}
 
 }
+
+func TestSearchAlbumErrored(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+}
+	`))}}}
+
+	data, extraData, err := SearchAlbum(client, "AnyAlbum")
+
+	if err == nil {
+		t.Errorf("TestSearchAlbumErrored should fail.")
+	}
+
+	if data.Name != "" {
+		t.Errorf("Retrieved album name should be empty.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
+	}
+}
+
+func TestSearchAlbumNotFound(t *testing.T) {
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 1,
+	"iTotalDisplayRecords": 1,
+	"sEcho": 0,
+	"aaData": [
+		[
+			"<a href=\"https://www.metal-archives.com/bands/Cannibal_Corpse/186\" title=\"Cannibal Corpse (US)\">Cannibal Corpse</a>",
+			"<a href=\"https://www.metal-archives.com/albums/Cannibal_Corpse/Eaten_Back_to_Life/778\">Eaten Back to Life</a> <!-- 1.8124998 -->" ,
+			"Full-length"      ,
+			"August 16th, 1990 <!-- 1990-08-16 -->"     		]
+		]
+}
+	`))}}}
+
+	data, extraData, err := SearchAlbum(client, "AnyAlbum")
+
+	if err == nil {
+		t.Errorf("TestSearchAlbumNotFound should fail.")
+	}
+
+	if err.Error() != "No album was found." {
+		t.Errorf("TestSearchAlbumNotFound error should be 'No album was found.'")
+	}
+
+	if data.Name != "" {
+		t.Errorf("Retrieved album name should be empty.")
+	}
+
+	if len(extraData) != 0 {
+		t.Errorf("Retrieved extra data should be empty.")
+	}
+}
