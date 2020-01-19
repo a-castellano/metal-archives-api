@@ -6,7 +6,6 @@ import (
 	"github.com/a-castellano/metal-archives-wrapper/types"
 	"golang.org/x/net/html"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -66,7 +65,7 @@ func GetArtistRecords(client http.Client, artistData SearchArtistData) ([]Record
 	stringBody := string(body)
 	doc, err := html.Parse(strings.NewReader(stringBody))
 	if err != nil {
-		log.Fatal(err)
+		return records, err
 	}
 	var f func(*html.Node, *[]Record)
 	f = func(n *html.Node, records *[]Record) {
