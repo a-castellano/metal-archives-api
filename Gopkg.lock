@@ -3,13 +3,18 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:cab37ea831bb9be343b41a7673e64b6bb8399bc0f051180c04ce561573ed2c89"
   name = "golang.org/x/net"
-  packages = ["html","html/atom"]
+  packages = [
+    "html",
+    "html/atom",
+  ]
+  pruneopts = ""
   revision = "c0dbc17a35534bf2e581d7a942408dc936316da4"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "98fa290a41fbd1abcf431b918afca762be4b70dd1bb2691c34b06ed78caac5e5"
+  input-imports = ["golang.org/x/net/html"]
   solver-name = "gps-cdcl"
   solver-version = 1
