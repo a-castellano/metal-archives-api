@@ -3,5 +3,5 @@
   name = "golang.org/x/net"
 
 [[constraint]]
+  branch = "v6"
   name = "github.com/go-redis/redis"
-  version = "6.15.6"
