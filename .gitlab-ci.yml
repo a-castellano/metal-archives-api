@@ -117,7 +117,7 @@ scan:
   stage: scan
   image: daedalusproject/base_sonar_scanner
   script:
-  - sonar-scanner -Dsonar.projectKey=metal-archives-wrapper -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.windmaker.net -Dsonar.login=${SONAR_LOGIN} -Dsonar.exclusions="*/*_test.go"
+  - sonar-scanner -Dsonar.projectKey=metal-archives-wrapper -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.windmaker.net -Dsonar.login=${SONAR_LOGIN} -Dsonar.exclusions="*/*_test.go" -Dsonar.branch.name="${CI_COMMIT_REF_NAME}"
   dependencies:
   - code_coverage
 
