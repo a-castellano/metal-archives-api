@@ -19,3 +19,5 @@ cover/
 
 # Cover html report
 coverage.html
+
+.scannerwork/

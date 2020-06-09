@@ -3,6 +3,7 @@ image: daedalusproject/base_golang_1_13:202001111126
 stages:
     - dep
     - test
+    - scan
     - deploy
 
 dep:
@@ -80,6 +81,7 @@ code_coverage:
     name: "coverage-$CI_PIPELINE_ID"
     paths:
       - coverage.html
+      - cover
     expire_in: 1 hour
   coverage: /total:\s+.+\s(\d+\.\d+?)%$/
 
@@ -111,9 +113,17 @@ lint_code:
   script:
     - make lint
 
+scan:
+  stage: scan
+  image: daedalusproject/base_sonar_scanner
+  script:
+  - sonar-scanner -Dsonar.projectKey=metal-archives-wrapper -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.windmaker.net -Dsonar.login=${SONAR_LOGIN} -Dsonar.exclusions="*/*_test.go"
+  dependencies:
+  - code_coverage
+
 pages:
   stage: deploy
-  image: daedalusproject/base_docker:202001111126
+  image: daedalusproject/base:202001111126
   script:
   - cp coverage.html public/
   artifacts:

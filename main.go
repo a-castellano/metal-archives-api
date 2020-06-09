@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/a-castellano/metal-archives-wrapper/albums"
 	"github.com/a-castellano/metal-archives-wrapper/artists"
+	"github.com/go-redis/redis"
 	"log"
 	"net/http"
 	"time"
@@ -47,4 +48,12 @@ func main() {
 	findArtist()
 	fmt.Println("_______________________________________")
 	findAlbum()
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	pong, err := client.Ping().Result()
+	fmt.Println(pong, err)
 }
