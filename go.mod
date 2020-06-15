@@ -3,6 +3,7 @@ module github.com/a-castellano/metal-archives-wrapper
 go 1.13
 
 require (
-	github.com/go-redis/redis v6.15.8+incompatible
+	github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938
+	github.com/streadway/amqp v1.0.0
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9
 )
