@@ -1,33 +1,44 @@
 package jobs
 
 import (
+	"errors"
 	"fmt"
-	"github.com/a-castellano/music-manager-common-types/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
+	"github.com/a-castellano/music-manager-metal-archives-wrapper/artists"
 	"net/http"
 )
 
 func ProcessJob(data []byte, client http.Client) (bool, error) {
-	job, err := types.DecodeJob(data)
+	job, decodeJobErr := commontypes.DecodeJob(data)
 	var die bool = false
-	if err == nil {
+	var err error
+	if decodeJobErr == nil {
 		// Job has been successfully decoded
 		switch job.Type {
-		case types.ArtistInfoRetrieval:
+		case commontypes.ArtistInfoRetrieval:
 			// Data must be
-			retrievalData := types.DecodeInfoRetrieval(job.Data)
-			switch retrievalData.Type {
-			case types.ArtistName:
-				data, extraData, err := artists.SearchArtist(client, retrievalData.Artist)
-			default:
-				err = errors.New("Music Manager Metal Archives Wrapper - ArtistInfoRetrieval type should be only ArtistName.")
+			retrievalData, decodeInfoRetrievalError := commontypes.DecodeInfoRetrieval(job.Data)
+			if decodeInfoRetrievalError == nil {
+				err = decodeInfoRetrievalError
+			} else {
+				switch retrievalData.Type {
+				case commontypes.ArtistName:
+					//data, extraData, err := artists.SearchArtist(client, retrievalData.Artist)
+					_, _, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
+					err = errSearchArtist
+				default:
+					err = errors.New("Music Manager Metal Archives Wrapper - ArtistInfoRetrieval type should be only ArtistName.")
+				}
 			}
-		case types.RecordInfoRetrieval:
+		case commontypes.RecordInfoRetrieval:
 			fmt.Println("RecordInfoRetrieval")
-		case types.JobInfoRetrieval:
+		case commontypes.JobInfoRetrieval:
 			err = errors.New("Music Manager Metal Archives Wrapper - should not receive 'Jon Info Retrieval' jobs.")
-		case types.Die:
+		case commontypes.Die:
 			die = true
 		}
+	} else {
+		err = decodeJobErr
 	}
-	return err
+	return die, err
 }
