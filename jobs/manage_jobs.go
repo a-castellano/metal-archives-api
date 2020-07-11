@@ -36,6 +36,8 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 			err = errors.New("Music Manager Metal Archives Wrapper - should not receive 'Jon Info Retrieval' jobs.")
 		case commontypes.Die:
 			die = true
+		default:
+			err = errors.New("Unknown Job Type.")
 		}
 	} else {
 		err = decodeJobErr
