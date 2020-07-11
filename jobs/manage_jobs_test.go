@@ -2,7 +2,6 @@ package jobs
 
 import (
 	"bytes"
-	"errors"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -48,8 +47,8 @@ func TestProcessJobEmptyData(t *testing.T) {
 
 	die, err := ProcessJob(emptyData, client)
 
-	if err != errors.New("Unknown Job Type.") {
-		t.Errorf("Message with failed data should return 'Unknown Job Type.' error, not %s.", err)
+	if err.Error() != "Empty data received." {
+		t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
 	}
 
 	if die == true {

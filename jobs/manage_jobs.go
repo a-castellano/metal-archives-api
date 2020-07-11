@@ -40,7 +40,7 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 			err = errors.New("Unknown Job Type.")
 		}
 	} else {
-		err = decodeJobErr
+		err = errors.New("Empty data received.")
 	}
 	return die, err
 }
