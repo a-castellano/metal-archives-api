@@ -23,9 +23,31 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 			} else {
 				switch retrievalData.Type {
 				case commontypes.ArtistName:
-					//data, extraData, err := artists.SearchArtist(client, retrievalData.Artist)
-					_, _, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
-					err = errSearchArtist
+					data, extraData, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
+					if err != nil {
+						err = errSearchArtist
+					} else {
+						// Encode Artist Data
+						artistData := commontypes.Artist{}
+						artistData.Name = data.Name
+						artistData.URL = data.URL
+						artistData.ID = data.ID
+						artistData.Country = data.Country
+						artistData.Genre = data.Genre
+						artistinfo := commontypes.ArtistInfo{}
+
+						artistinfo.Data = artistData
+
+						for _, extraArtist := range extraData {
+							var artist commontypes.Artist
+							artist.Name = extraArtist.Name
+							artist.URL = extraArtist.URL
+							artist.ID = extraArtist.ID
+							artist.Country = extraArtist.Country
+							artist.Genre = extraArtist.Genre
+							artistinfo.ExtraData = append(artistinfo.ExtraData, artist)
+						}
+					}
 				default:
 					err = errors.New("Music Manager Metal Archives Wrapper - ArtistInfoRetrieval type should be only ArtistName.")
 				}
@@ -33,7 +55,7 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 		case commontypes.RecordInfoRetrieval:
 			fmt.Println("RecordInfoRetrieval")
 		case commontypes.JobInfoRetrieval:
-			err = errors.New("Music Manager Metal Archives Wrapper - should not receive 'Jon Info Retrieval' jobs.")
+			err = errors.New("Music Manager Metal Archives Wrapper - should not receive 'Job Info Retrieval' jobs.")
 		case commontypes.Die:
 			die = true
 		default:
