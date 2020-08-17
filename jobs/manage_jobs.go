@@ -16,16 +16,14 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 		// Job has been successfully decoded
 		switch job.Type {
 		case commontypes.ArtistInfoRetrieval:
-			// Data must be
-			retrievalData, decodeInfoRetrievalError := commontypes.DecodeInfoRetrieval(job.Data)
-			if decodeInfoRetrievalError == nil {
-				err = decodeInfoRetrievalError
-			} else {
+			var retrievalData commontypes.InfoRetrieval
+			retrievalData, err = commontypes.DecodeInfoRetrieval(job.Data)
+			if err == nil {
 				switch retrievalData.Type {
 				case commontypes.ArtistName:
 					data, extraData, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
-					if err != nil {
-						err = errSearchArtist
+					if errSearchArtist != nil {
+						err = errors.New(errors.New("Artist retrieval failed: ").Error() + errSearchArtist.Error())
 					} else {
 						// Encode Artist Data
 						artistData := commontypes.Artist{}
@@ -54,15 +52,15 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 			}
 		case commontypes.RecordInfoRetrieval:
 			fmt.Println("RecordInfoRetrieval")
-		case commontypes.JobInfoRetrieval:
-			err = errors.New("Music Manager Metal Archives Wrapper - should not receive 'Job Info Retrieval' jobs.")
 		case commontypes.Die:
 			die = true
 		default:
-			err = errors.New("Unknown Job Type.")
+			err = errors.New("Unknown Job Type for this service.")
 		}
+		fmt.Println("sdsasdads")
 	} else {
 		err = errors.New("Empty data received.")
 	}
+	fmt.Println("sdsasdads")
 	return die, err
 }
