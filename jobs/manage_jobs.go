@@ -57,7 +57,6 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 		default:
 			err = errors.New("Unknown Job Type for this service.")
 		}
-		fmt.Println("sdsasdads")
 	} else {
 		err = errors.New("Empty data received.")
 	}
