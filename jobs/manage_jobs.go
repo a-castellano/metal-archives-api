@@ -5,6 +5,7 @@ import (
 	"fmt"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"github.com/a-castellano/music-manager-metal-archives-wrapper/artists"
+	"github.com/streadway/amqp"
 	"net/http"
 )
 

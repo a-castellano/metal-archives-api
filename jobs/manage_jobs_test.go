@@ -2,6 +2,9 @@ package jobs
 
 import (
 	"bytes"
+	"github.com/NeowayLabs/wabbit/amqp"
+	"github.com/NeowayLabs/wabbit/amqptest"
+	"github.com/NeowayLabs/wabbit/amqptest/server"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
