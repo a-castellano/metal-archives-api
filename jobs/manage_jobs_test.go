@@ -2,9 +2,6 @@ package jobs
 
 import (
 	"bytes"
-	"github.com/NeowayLabs/wabbit/amqp"
-	"github.com/NeowayLabs/wabbit/amqptest"
-	"github.com/NeowayLabs/wabbit/amqptest/server"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
@@ -50,7 +47,7 @@ func TestProcessJobEmptyData(t *testing.T) {
 }
 	`))}}}
 
-	die, err := ProcessJob(emptyData, client)
+	die, jobResult, err := ProcessJob(emptyData, client)
 
 	if err.Error() != "Empty data received." {
 		t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
@@ -59,6 +56,11 @@ func TestProcessJobEmptyData(t *testing.T) {
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
+
+	if len(jobResult) != 0 {
+		t.Errorf("jobResult should be empty")
+	}
+
 }
 
 func TestProcessJobErrorOnArtist(t *testing.T) {
@@ -98,7 +100,7 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, err := ProcessJob(encodedJob, client)
+	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
 		if !strings.HasPrefix(err.Error(), "Artist retrieval failed:") {
@@ -109,6 +111,11 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
+
+	if len(jobResult) != 0 {
+		t.Errorf("jobResult should be empty")
+	}
+
 }
 
 func TestProcessJobOneArtist(t *testing.T) {
@@ -154,7 +161,7 @@ func TestProcessJobOneArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, err := ProcessJob(encodedJob, client)
+	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
 		if err.Error() != "Empty data received." {
@@ -165,6 +172,11 @@ func TestProcessJobOneArtist(t *testing.T) {
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
+
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
+	}
+
 }
 
 func TestProcessJobMoreThanOneArtist(t *testing.T) {
@@ -220,7 +232,7 @@ func TestProcessJobMoreThanOneArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, err := ProcessJob(encodedJob, client)
+	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
 		if err.Error() != "Empty data received." {
@@ -231,6 +243,11 @@ func TestProcessJobMoreThanOneArtist(t *testing.T) {
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
+
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
+	}
+
 }
 
 func TestProcessJobNoArtists(t *testing.T) {
@@ -262,7 +279,7 @@ func TestProcessJobNoArtists(t *testing.T) {
 }
 	`))}}}
 
-	die, err := ProcessJob(encodedJob, client)
+	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
 		if err.Error() == "Artist retrieval failed: No artist was found." {
@@ -276,4 +293,9 @@ func TestProcessJobNoArtists(t *testing.T) {
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
+
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
+	}
+
 }

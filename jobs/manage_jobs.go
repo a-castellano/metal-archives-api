@@ -5,14 +5,16 @@ import (
 	"fmt"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"github.com/a-castellano/music-manager-metal-archives-wrapper/artists"
-	"github.com/streadway/amqp"
 	"net/http"
 )
 
-func ProcessJob(data []byte, client http.Client) (bool, error) {
+func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
+
 	job, decodeJobErr := commontypes.DecodeJob(data)
 	var die bool = false
 	var err error
+	var processedJob []byte
+
 	if decodeJobErr == nil {
 		// Job has been successfully decoded
 		switch job.Type {
@@ -23,7 +25,8 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 				switch retrievalData.Type {
 				case commontypes.ArtistName:
 					data, extraData, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
-					if errSearchArtist != nil {
+					// If there is no artist info job must return empty data, but it is not an error.
+					if errSearchArtist != nil && errSearchArtist.Error() != "No artist was found." {
 						err = errors.New(errors.New("Artist retrieval failed: ").Error() + errSearchArtist.Error())
 					} else {
 						// Encode Artist Data
@@ -46,6 +49,8 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 							artist.Genre = extraArtist.Genre
 							artistinfo.ExtraData = append(artistinfo.ExtraData, artist)
 						}
+						job.Result, _ = commontypes.EncodeArtistInfo(artistinfo)
+						processedJob, _ = commontypes.EncodeJob(job)
 					}
 				default:
 					err = errors.New("Music Manager Metal Archives Wrapper - ArtistInfoRetrieval type should be only ArtistName.")
@@ -61,6 +66,5 @@ func ProcessJob(data []byte, client http.Client) (bool, error) {
 	} else {
 		err = errors.New("Empty data received.")
 	}
-	fmt.Println("sdsasdads")
-	return die, err
+	return die, processedJob, err
 }

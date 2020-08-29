@@ -1,3 +1,5 @@
+github.com/NeowayLabs/wabbit v0.0.0-20200409220312-12e68ab5b0c6 h1:LBDcAaRv5atYVAkZzfAqlTal7bkmJb1AViI1wsNZUUU=
+github.com/NeowayLabs/wabbit v0.0.0-20200409220312-12e68ab5b0c6/go.mod h1:Jp6npmrFAOZdPpJQgIQyDzaSApVtYTSrK5VAV49OtfQ=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817161849-968beb7aa756 h1:hSyw1lnJN5ICbv9gdH9xSooVS8tJGlzEYoPOk9c7LOg=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817161849-968beb7aa756/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817184654-3b1150d34b20 h1:+NwGkj7nT0YLnGTOa7oEYZjVNYEBACmEnstO1OY8wl8=
@@ -8,8 +10,16 @@ github.com/a-castellano/music-manager-common-types v0.0.0-20200817205414-616c9b7
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817205414-616c9b70ae1c/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e23717 h1:EytyYmc5sV2MuduuqG4PvziCLHFy4qlu6s3qK1fxXSE=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e23717/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26 h1:KqcNZnyM3qRiY7fuKq0njuoSKH2iBAtYzwfvA/S8O3Q=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26/go.mod h1:o065t5uo+ES5jxAE9gI9jQROQXOr3bQWk/fx19WJDC0=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938 h1:1JPMy05612rNXwI/n4eSmgPJJJRZ5+AXsRqqWvS7E+k=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938/go.mod h1:DZZzf6+VoOt3nQmEVR6D6b1sCle9zkBaVY2FwdyKXV0=
+github.com/google/uuid v1.0.0 h1:b4Gk+7WdP/d3HZH8EJsZpvV7EtDOgaZLtnaNGIu1adA=
+github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/nsf/gocode v0.0.0-20190302080247-5bee97b48836 h1:oc3CL18CoGhyOQJ7HDa9gJAde33bwI8Vi28zLdIzJVc=
+github.com/nsf/gocode v0.0.0-20190302080247-5bee97b48836/go.mod h1:6Q8/OMaaKAgTX7/jt2bOXVDrm1eJhoNd+iwzghR7jvs=
+github.com/pborman/uuid v1.2.1 h1:+ZZIw58t/ozdjRaXh/3awHfmWRbzYxJoAdNJxe/3pvw=
+github.com/pborman/uuid v1.2.1/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
 github.com/streadway/amqp v1.0.0 h1:kuuDrUJFZL1QYL9hUNuCxNObNzB0bV/ZG5jV3RWAQgo=
 github.com/streadway/amqp v1.0.0/go.mod h1:AZpEONHx3DKn8O/DFsRAY58/XVQiIPMTMB1SddzLXVw=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
@@ -17,6 +27,8 @@ golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPh
 golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/net v0.0.0-20200813134508-3edf25e44fcc h1:zK/HqS5bZxDptfPJNq8v7vJfXtkU7r9TLIoSr1bXaP4=
 golang.org/x/net v0.0.0-20200813134508-3edf25e44fcc/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
+golang.org/x/net v0.0.0-20200822124328-c89045814202 h1:VvcQYSHwXgi7W+TpUR6A9g6Up98WAHf3f/ulnJ62IyA=
+golang.org/x/net v0.0.0-20200822124328-c89045814202/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
