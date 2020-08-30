@@ -2,7 +2,8 @@ package config
 
 import (
 	"errors"
-	viper "github.com/spf13/viper"
+	"fmt"
+	viperLib "github.com/spf13/viper"
 )
 
 type Server struct {
@@ -31,6 +32,8 @@ func ReadConfig() (Config, error) {
 	var configFileLocation string
 	var config Config
 
+	viper := viperLib.New()
+
 	//Look for config file location defined as env var
 	viper.BindEnv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION")
 	configFileLocation = viper.GetString("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION")
@@ -44,6 +47,21 @@ func ReadConfig() (Config, error) {
 
 	if err := viper.ReadInConfig(); err != nil {
 		return config, errors.New(errors.New("Fatal error config file: ").Error() + err.Error())
+	}
+
+	fmt.Println(configFileLocation)
+	fmt.Println(viper.AllSettings())
+	if !viper.IsSet("server.host") {
+		return config, errors.New("Fatal error config: no server host was found.")
+	}
+	if !viper.IsSet("server.port") {
+		return config, errors.New("Fatal error config: no server port was found.")
+	}
+	if !viper.IsSet("server.user") {
+		return config, errors.New("Fatal error config: no server user was found.")
+	}
+	if !viper.IsSet("server.password") {
+		return config, errors.New("Fatal error config: no server password was found.")
 	}
 
 	return config, nil
