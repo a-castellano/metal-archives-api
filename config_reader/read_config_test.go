@@ -40,3 +40,27 @@ func TestProcessServerOnlyHostInConfig(t *testing.T) {
 		}
 	}
 }
+
+func TestProcessServerNoUserPasswordInConfig(t *testing.T) {
+	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/server_only_host_port/")
+	_, err := ReadConfig()
+	if err == nil {
+		t.Errorf("ReadConfig method without user password should fail.")
+	} else {
+		if err.Error() != "Fatal error config: no server user was found." {
+			t.Errorf("Error should be \"Fatal error config: no server user was found.\" but error was '%s'.", err.Error())
+		}
+	}
+}
+
+func TestProcessServerNoIncomingServerInConfig(t *testing.T) {
+	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/server_no_incoming_server/")
+	_, err := ReadConfig()
+	if err == nil {
+		t.Errorf("ReadConfig method without incomming server.")
+	} else {
+		if err.Error() != "Fatal error config: no server password was found." {
+			t.Errorf("Error should be \"Fatal error config: no server password was found.\" but error was '%s'.", err.Error())
+		}
+	}
+}

@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-	"fmt"
 	viperLib "github.com/spf13/viper"
 )
 
@@ -49,8 +48,6 @@ func ReadConfig() (Config, error) {
 		return config, errors.New(errors.New("Fatal error config file: ").Error() + err.Error())
 	}
 
-	fmt.Println(configFileLocation)
-	fmt.Println(viper.AllSettings())
 	if !viper.IsSet("server.host") {
 		return config, errors.New("Fatal error config: no server host was found.")
 	}
