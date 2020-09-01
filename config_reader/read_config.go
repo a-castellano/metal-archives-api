@@ -31,6 +31,10 @@ func ReadConfig() (Config, error) {
 	var configFileLocation string
 	var config Config
 
+	server_variables := []string{"host", "port", "user", "password"}
+	queue_names := []string{"incoming", "outgoing"}
+	queue_variables := []string{"name", "durable", "delete_when_unused", "exclusive", "no_wait", "auto_ack"}
+
 	viper := viperLib.New()
 
 	//Look for config file location defined as env var
@@ -48,17 +52,18 @@ func ReadConfig() (Config, error) {
 		return config, errors.New(errors.New("Fatal error config file: ").Error() + err.Error())
 	}
 
-	if !viper.IsSet("server.host") {
-		return config, errors.New("Fatal error config: no server host was found.")
+	for _, server_variable := range server_variables {
+		if !viper.IsSet("server." + server_variable) {
+			return config, errors.New("Fatal error config: no server " + server_variable + " was found.")
+		}
 	}
-	if !viper.IsSet("server.port") {
-		return config, errors.New("Fatal error config: no server port was found.")
-	}
-	if !viper.IsSet("server.user") {
-		return config, errors.New("Fatal error config: no server user was found.")
-	}
-	if !viper.IsSet("server.password") {
-		return config, errors.New("Fatal error config: no server password was found.")
+
+	for _, queue := range queue_names {
+		for _, variable := range queue_variables {
+			if !viper.IsSet(queue + "." + variable) {
+				return config, errors.New("Fatal error config: no " + queue + " server " + variable + " variable was found.")
+			}
+		}
 	}
 
 	return config, nil

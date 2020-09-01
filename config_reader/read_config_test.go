@@ -57,10 +57,10 @@ func TestProcessServerNoIncomingServerInConfig(t *testing.T) {
 	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/server_no_incoming_server/")
 	_, err := ReadConfig()
 	if err == nil {
-		t.Errorf("ReadConfig method without incomming server.")
+		t.Errorf("ReadConfig method without incomming server name should fail.")
 	} else {
-		if err.Error() != "Fatal error config: no server password was found." {
-			t.Errorf("Error should be \"Fatal error config: no server password was found.\" but error was '%s'.", err.Error())
+		if err.Error() != "Fatal error config: no incoming server name variable was found." {
+			t.Errorf("Error should be \"Fatal error config: no incoming server name variable was found.\" but error was '%s'.", err.Error())
 		}
 	}
 }
