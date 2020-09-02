@@ -64,3 +64,12 @@ func TestProcessServerNoIncomingServerInConfig(t *testing.T) {
 		}
 	}
 }
+
+func TestOKConfig(t *testing.T) {
+	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/ok/")
+	_, err := ReadConfig()
+	if err != nil {
+		t.Errorf("ReadConfig with ok config shouln't return errors. Returned: %s", err.Error())
+	}
+
+}
