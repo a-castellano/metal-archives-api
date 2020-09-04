@@ -67,9 +67,58 @@ func TestProcessServerNoIncomingServerInConfig(t *testing.T) {
 
 func TestOKConfig(t *testing.T) {
 	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/ok/")
-	_, err := ReadConfig()
+	config, err := ReadConfig()
 	if err != nil {
-		t.Errorf("ReadConfig with ok config shouln't return errors. Returned: %s", err.Error())
+		t.Errorf("ReadConfig with ok config shouln't return errors. Returned: %s.", err.Error())
+	}
+	if config.Server.Host != "localhost" {
+		t.Errorf("Server Host should be localhost. Returned: %s.", config.Server.Host)
+	}
+	if config.Server.Port != 5672 {
+		t.Errorf("Server Port should be 5672. Returned: %d.", config.Server.Port)
+	}
+	if config.Server.User != "guest" {
+		t.Errorf("Server Host should be guest. Returned: %s.", config.Server.User)
+	}
+	if config.Server.Password != "pass" {
+		t.Errorf("Server Password should be pass. Returned: %s.", config.Server.Password)
 	}
 
+	if config.Incoming.Name != "incoming" {
+		t.Errorf("Incoming name should be incoming. Returned: %s.", config.Incoming.Name)
+	}
+	if config.Incoming.Durable != true {
+		t.Errorf("Incoming durable should be true. It's False.")
+	}
+	if config.Incoming.DeleteWhenUnused != false {
+		t.Errorf("Incoming delete_when_unused should be false. It's true.")
+	}
+	if config.Incoming.Exclusive != false {
+		t.Errorf("Incoming exclusive should be false. It's true.")
+	}
+	if config.Incoming.NoWait != false {
+		t.Errorf("Incoming no_wait should be false. It's true.")
+	}
+	if config.Incoming.AutoACK != false {
+		t.Errorf("Incoming auto_ack should be false. It's true.")
+	}
+
+	if config.Outgoing.Name != "outgoing" {
+		t.Errorf("Outgoing name should be incoming. Returned: %s.", config.Outgoing.Name)
+	}
+	if config.Outgoing.Durable != true {
+		t.Errorf("Outgoing durable should be true. It's False.")
+	}
+	if config.Outgoing.DeleteWhenUnused != false {
+		t.Errorf("Outgoing delete_when_unused should be false. It's true.")
+	}
+	if config.Outgoing.Exclusive != false {
+		t.Errorf("Outgoing exclusive should be false. It's true.")
+	}
+	if config.Outgoing.NoWait != false {
+		t.Errorf("Outgoing no_wait should be false. It's true.")
+	}
+	if config.Outgoing.AutoACK != true {
+		t.Errorf("Outgoing auto_ack should be true. It's false.")
+	}
 }

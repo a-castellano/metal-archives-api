@@ -2,7 +2,7 @@
 host = "localhost"
 port = 5672
 user = "guest"
-password = "guest"
+password = "pass"
 
 [incoming]
 name = "incoming"
@@ -18,5 +18,5 @@ durable = true
 delete_when_unused = false
 exclusive = false
 no_wait = false
-auto_ack = false
+auto_ack = true
 
