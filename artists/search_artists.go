@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/a-castellano/metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -12,13 +13,7 @@ import (
 	"strings"
 )
 
-type SearchArtistData struct {
-	Name    string
-	URL     string
-	ID      int
-	Genre   string
-	Country string
-}
+type SearchArtistData commontypes.Artist
 
 func searchArtistAjax(client http.Client, artist string) ([][]string, error) {
 

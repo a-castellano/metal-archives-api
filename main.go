@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/a-castellano/metal-archives-wrapper/albums"
-	"github.com/a-castellano/metal-archives-wrapper/artists"
+	"github.com/a-castellano/music-manager-metal-archives-wrapper/albums"
+	"github.com/a-castellano/music-manager-metal-archives-wrapper/artists"
 	"log"
 	"net/http"
 	"time"

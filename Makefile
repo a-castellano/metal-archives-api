@@ -3,7 +3,7 @@ PKG := "github.com/a-castellano/$(PROJECT_NAME)"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 
-.PHONY: all dep build clean test coverage coverhtml lint
+.PHONY: all build clean test coverage coverhtml lint
 
 all: build
 
@@ -13,10 +13,10 @@ lint: ## Lint the files
 test: ## Run unittests
 	@go test -short ./...
 
-race: dep ## Run data race detector
+race: ## Run data race detector
 	@go test -race -short ${PKG_LIST}
 
-msan: dep ## Run memory sanitizer
+msan: ## Run memory sanitizer
 	@go test -msan -short ${PKG_LIST}
 
 coverage: ## Generate global code coverage report
@@ -25,10 +25,7 @@ coverage: ## Generate global code coverage report
 coverhtml: ## Generate global code coverage report in HTML
 	./scripts/coverage.sh html;
 
-dep: ## Get the dependencies
-	@dep ensure -v -vendor-only
-
-build: dep ## Build the binary file
+build: ## Build the binary file
 	@go build -i -v $(PKG)
 
 clean: ## Remove previous build
