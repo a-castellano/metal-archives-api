@@ -18,6 +18,7 @@ type Queue struct {
 	DeleteWhenUnused bool
 	Exclusive        bool
 	NoWait           bool
+	NoLocal          bool
 	AutoACK          bool
 }
 
@@ -33,7 +34,7 @@ func ReadConfig() (Config, error) {
 
 	server_variables := []string{"host", "port", "user", "password"}
 	queue_names := []string{"incoming", "outgoing"}
-	queue_variables := []string{"name", "durable", "delete_when_unused", "exclusive", "no_wait", "auto_ack"}
+	queue_variables := []string{"name", "durable", "delete_when_unused", "exclusive", "no_wait", "no_local", "auto_ack"}
 
 	viper := viperLib.New()
 
