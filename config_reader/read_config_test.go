@@ -99,6 +99,9 @@ func TestOKConfig(t *testing.T) {
 	if config.Incoming.NoWait != false {
 		t.Errorf("Incoming no_wait should be false. It's true.")
 	}
+	if config.Incoming.NoLocal != false {
+		t.Errorf("Incoming no_local should be false. It's true.")
+	}
 	if config.Incoming.AutoACK != false {
 		t.Errorf("Incoming auto_ack should be false. It's true.")
 	}
@@ -117,6 +120,9 @@ func TestOKConfig(t *testing.T) {
 	}
 	if config.Outgoing.NoWait != false {
 		t.Errorf("Outgoing no_wait should be false. It's true.")
+	}
+	if config.Outgoing.NoLocal != false {
+		t.Errorf("Outgoing no_local should be false. It's true.")
 	}
 	if config.Outgoing.AutoACK != true {
 		t.Errorf("Outgoing auto_ack should be true. It's false.")

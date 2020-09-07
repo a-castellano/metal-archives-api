@@ -10,6 +10,7 @@ durable = true
 delete_when_unused = false
 exclusive = false
 no_wait = false
+no_local = false
 auto_ack = false
 
 [outgoing]
@@ -18,5 +19,6 @@ durable = true
 delete_when_unused = false
 exclusive = false
 no_wait = false
+no_local = false
 auto_ack = true
 
