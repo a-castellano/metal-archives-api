@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/a-castellano/metal-archives-wrapper/types"
+	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"regexp"

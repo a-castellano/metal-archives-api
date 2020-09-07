@@ -16,6 +16,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/NeowayLabs/wabbit v0.0.0-20200409220312-12e68ab5b0c6 h1:LBDcAaRv5atYVAkZzfAqlTal7bkmJb1AViI1wsNZUUU=
 github.com/NeowayLabs/wabbit v0.0.0-20200409220312-12e68ab5b0c6/go.mod h1:Jp6npmrFAOZdPpJQgIQyDzaSApVtYTSrK5VAV49OtfQ=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
+github.com/a-castellano/metal-archives-wrapper v0.0.0-20200906192842-d62092d6021b h1:V2e+4HyoJIcvYfnegSTTTy9VX0GdXdg5yxXYt+d6XtI=
+github.com/a-castellano/metal-archives-wrapper v0.0.0-20200906192842-d62092d6021b/go.mod h1:r1sngHEWXJkUhHPrYRiaDNWChCefUEZNdtyib9QPodU=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817161849-968beb7aa756 h1:hSyw1lnJN5ICbv9gdH9xSooVS8tJGlzEYoPOk9c7LOg=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817161849-968beb7aa756/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817184654-3b1150d34b20 h1:+NwGkj7nT0YLnGTOa7oEYZjVNYEBACmEnstO1OY8wl8=
