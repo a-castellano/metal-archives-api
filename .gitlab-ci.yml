@@ -67,7 +67,7 @@ integration_tests:
   before_script:
     - sudo apt-get update
     - sudo apt-get install -y rabbitmq-server
-    - sudo service rabbitmq start
+    - sudo service rabbitmq-server start
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"
