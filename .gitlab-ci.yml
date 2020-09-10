@@ -4,6 +4,7 @@ stages:
     - unit_tests
     - integration_tests
     - coverage
+    - report
     - scan
     - deploy
 
@@ -95,7 +96,7 @@ coverage:
   coverage: /total:\s+.+\s(\d+\.\d+?)%$/
 
 code_coverage_report:
-  stage: coverage
+  stage: report
   before_script:
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
@@ -117,7 +118,7 @@ scan:
   script:
   - sonar-scanner -Dsonar.projectKey=metal-archives-wrapper -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.windmaker.net -Dsonar.login=${SONAR_LOGIN} -Dsonar.exclusions="*/*_test.go"
   dependencies:
-  - code_coverage
+  - code_coverage_report
 
 pages:
   stage: deploy
