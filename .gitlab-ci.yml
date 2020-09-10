@@ -65,6 +65,8 @@ lint_code:
 integration_tests:
   stage: integration_tests
   before_script:
+    - apt-get update
+    - apt-get install -y rabbitmq-server
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"

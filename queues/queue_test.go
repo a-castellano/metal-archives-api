@@ -1,4 +1,4 @@
-// +build integration
+// +build integration_tests
 
 package queues
 
