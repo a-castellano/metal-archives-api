@@ -109,7 +109,7 @@ code_coverage_report:
   only:
   - master
   dependencies:
-  - code_coverage_report
+  - coverage
 
 scan:
   stage: scan
