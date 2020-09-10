@@ -1,4 +1,4 @@
-image: daedalusproject/base_golang_1_14:202008192225
+image: daedalusproject/base_golang_1_14:202009102033
 
 stages:
     - unit_tests
