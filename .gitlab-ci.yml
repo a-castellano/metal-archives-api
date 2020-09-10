@@ -81,6 +81,9 @@ integration_tests:
 coverage:
   stage: coverage
   before_script:
+    - sudo apt-get update
+    - sudo apt-get install -y rabbitmq-server
+    - sudo service rabbitmq-server start
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"
