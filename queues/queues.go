@@ -83,16 +83,14 @@ func startJobManagement(config config.Config, client http.Client) error {
 	processJobs := make(chan bool)
 
 	go func() {
-		fmt.Println("FUNC")
 		for job := range jobsToProcess {
 
 			fmt.Println("FUNC JOB")
 			die, jobResult, _ := jobs.ProcessJob(job.Body, client)
 
-			fmt.Println(die)
 			if die {
-				fmt.Println("DIEEEE")
 				job.Ack(false)
+				processJobs <- false
 				return
 			}
 			err = outgoing_ch.Publish(
@@ -111,11 +109,10 @@ func startJobManagement(config config.Config, client http.Client) error {
 			}
 
 			job.Ack(false)
-			return
 		}
+		return
 	}()
 
-	return nil
 	<-processJobs
 
 	return nil
