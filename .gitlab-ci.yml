@@ -75,6 +75,7 @@ integration_tests:
     - mkdir -p $GOPATH/src/github.com/a-castellano
     - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
     - cd $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
+    - sleep 10
   script:
     - make test_integration
 
@@ -91,6 +92,7 @@ coverage:
     - mkdir -p $GOPATH/src/github.com/a-castellano
     - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
     - cd $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
+    - sleep 10
   script:
     - make coverage
   artifacts:
