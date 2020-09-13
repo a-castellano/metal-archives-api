@@ -88,7 +88,6 @@ func startJobManagement(config config.Config, client http.Client) error {
 			die, jobResult, _ := jobs.ProcessJob(job.Body, client)
 
 			if die {
-				fmt.Println("DIE")
 				job.Ack(false)
 				processJobs <- false
 				return

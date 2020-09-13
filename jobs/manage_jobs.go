@@ -15,6 +15,10 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 	var die bool = false
 	var err error
 
+	job.ID = receivedJob.ID
+	job.Type = receivedJob.Type
+	job.Status = receivedJob.Status
+
 	if decodeJobErr == nil {
 		// Job has been successfully decoded
 		switch receivedJob.Type {

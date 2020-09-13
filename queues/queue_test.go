@@ -10,7 +10,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 	"testing"
 )
 
@@ -265,16 +264,13 @@ func TestSendNoArtistsFound(t *testing.T) {
 	decodedJob, decodedJobErr := commontypes.DecodeJob(receivedData)
 
 	if decodedJob.Type != commontypes.ArtistInfoRetrieval {
-		t.Errorf("Decoed job type should be ArtistInfoRetrieval in TestSendNoArtistsFound.")
+		t.Errorf("Decoded job type should be ArtistInfoRetrieval in TestSendNoArtistsFound. It's %d.", decodedJob.Type)
 	}
 	if decodedJobErr != nil {
 		t.Errorf("DecodeJob should return no errors.")
 	}
-	_, decodedResultErr := commontypes.DecodeArtistInfo(decodedJob.Result)
 
-	if decodedResultErr != nil {
-		if !strings.HasPrefix(decodedResultErr.Error(), "Artist r_etrieval failed:") {
-			t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", decodedResultErr.Error())
-		}
+	if decodedJob.Error != "Artist retrieval failed: No artist was found." {
+		t.Errorf("DecodeJob error should be 'Artist retrieval failed: No artist was found.', not '%s'.", decodedJob.Error)
 	}
 }
