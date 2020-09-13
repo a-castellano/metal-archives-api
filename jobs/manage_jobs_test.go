@@ -116,8 +116,15 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	if len(jobResult) == 0 {
 		t.Errorf("jobResult shouldn't be empty")
 	}
-	t.Errorf("%s", err)
 
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
+	}
+	decodedJob, _ := commontypes.DecodeJob(jobResult)
+
+	if decodedJob.Error != "Artist retrieval failed: invalid character ']' looking for beginning of value" {
+		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: invalid character ']' looking for beginning of value', not '%s'.", decodedJob.Error)
+	}
 }
 
 func TestProcessJobOneArtist(t *testing.T) {
@@ -297,10 +304,7 @@ func TestProcessJobNoArtists(t *testing.T) {
 	}
 
 	decodedJob, _ := commontypes.DecodeJob(jobResult)
-	if decodedJob.Error == nil {
-		t.Errorf("decodedJob.Error shouldn't be nil, job was processed correctly___________________-.")
-
+	if decodedJob.Error != "Artist retrieval failed: No artist was found." {
+		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: No artist was found.', not %s.", decodedJob.Error)
 	}
-
-	t.Errorf("%s", decodedJob.Error)
 }

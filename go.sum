@@ -32,6 +32,8 @@ github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad
 github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26/go.mod h1:o065t5uo+ES5jxAE9gI9jQROQXOr3bQWk/fx19WJDC0=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92 h1:TjDZNsWOV9gWkUrp87fnWj34KjLr1lEqsqRT5LqW2xo=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92/go.mod h1:fhQ2BawrJWPNA11kmtxwNrPG5tuoF6UmJmzX3QzGYY4=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200913142921-9d04f602678d h1:/pFhJ54tE0kIaanpDxeySxBbIfEtF67iKDQYqr63Mxs=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200913142921-9d04f602678d/go.mod h1:fhQ2BawrJWPNA11kmtxwNrPG5tuoF6UmJmzX3QzGYY4=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938 h1:1JPMy05612rNXwI/n4eSmgPJJJRZ5+AXsRqqWvS7E+k=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938/go.mod h1:DZZzf6+VoOt3nQmEVR6D6b1sCle9zkBaVY2FwdyKXV0=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=

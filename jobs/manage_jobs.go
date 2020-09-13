@@ -27,9 +27,8 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 					data, extraData, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
 					// If there is no artist info job must return empty data, but it is not an error.
 					if errSearchArtist != nil {
-						err = errors.New(errors.New("________________ Artist retrieval failed: ").Error() + errSearchArtist.Error())
-						job.ID = 32
-						job.Error = errors.New("____________")
+						err = errors.New(errors.New("Artist retrieval failed: ").Error() + errSearchArtist.Error())
+						job.Error = err.Error()
 					} else {
 						artistData := commontypes.Artist{}
 						artistData.Name = data.Name
@@ -54,7 +53,7 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 					}
 				default:
 					err = errors.New("Music Manager Metal Archives Wrapper - ArtistInfoRetrieval type should be only ArtistName.")
-					job.Error = err
+					job.Error = err.Error()
 				}
 			}
 		case commontypes.RecordInfoRetrieval:
@@ -67,9 +66,6 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 	} else {
 		err = errors.New("Empty job data received.")
 	}
-	processedJob, econdeJoberr := commontypes.EncodeJob(job)
-	if econdeJoberr != nil {
-		err = econdeJoberr
-	}
+	processedJob, _ := commontypes.EncodeJob(job)
 	return die, processedJob, err
 }
