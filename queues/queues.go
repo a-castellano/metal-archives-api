@@ -85,10 +85,10 @@ func startJobManagement(config config.Config, client http.Client) error {
 	go func() {
 		for job := range jobsToProcess {
 
-			fmt.Println("FUNC JOB")
 			die, jobResult, _ := jobs.ProcessJob(job.Body, client)
 
 			if die {
+				fmt.Println("DIE")
 				job.Ack(false)
 				processJobs <- false
 				return
@@ -105,6 +105,7 @@ func startJobManagement(config config.Config, client http.Client) error {
 				})
 			if err != nil {
 				//return fmt.Errorf("Failed to send job result: %w", err)
+				fmt.Println(err)
 				return
 			}
 

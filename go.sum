@@ -30,6 +30,8 @@ github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e23717/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26 h1:KqcNZnyM3qRiY7fuKq0njuoSKH2iBAtYzwfvA/S8O3Q=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26/go.mod h1:o065t5uo+ES5jxAE9gI9jQROQXOr3bQWk/fx19WJDC0=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92 h1:TjDZNsWOV9gWkUrp87fnWj34KjLr1lEqsqRT5LqW2xo=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92/go.mod h1:fhQ2BawrJWPNA11kmtxwNrPG5tuoF6UmJmzX3QzGYY4=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938 h1:1JPMy05612rNXwI/n4eSmgPJJJRZ5+AXsRqqWvS7E+k=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938/go.mod h1:DZZzf6+VoOt3nQmEVR6D6b1sCle9zkBaVY2FwdyKXV0=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -155,6 +157,8 @@ github.com/pelletier/go-toml v1.2.0 h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
 github.com/pelletier/go-toml v1.8.0 h1:Keo9qb7iRJs2voHvunFtuuYFsbWeOBh8/P9v/kVMFtw=
 github.com/pelletier/go-toml v1.8.0/go.mod h1:D6yutnOGMveHEPV7VQOuvI/gXY61bv+9bAOTRnLElKs=
+github.com/pelletier/go-toml v1.8.1 h1:1Nf83orprkJyknT6h7zbuEGUEjcyVlCxSUGTENmNCRM=
+github.com/pelletier/go-toml v1.8.1/go.mod h1:T2/BmBdy8dvIRq1a/8aqjN41wvWlN4lrapLU/GW4pbc=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/sftp v1.10.1/go.mod h1:lYOWFsE0bwd1+KfKJaKeuokY15vzFx25BLbzYYoAxZI=

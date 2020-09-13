@@ -37,7 +37,17 @@ management.tcp.ip   = 0.0.0.0
 EOF
 
 sudo chown 102:103 ${CONF}
-sudo docker cp  "${CONF}" rabbitmq_metal_archives_wrapper_test_server:/etc/rabbitmq/rabbitmq.conf 
+sudo docker cp  "${CONF}" rabbitmq_metal_archives_wrapper_test_server:/etc/rabbitmq/rabbitmq.conf
 sudo rm -f ${CONF}
 
-docker start rabbitmq_metal_archives_wrapper_test_server
+PLUGINS="$(mktemp)"
+
+cat <<EOF >>$PLUGINS
+[rabbitmq_management].
+EOF
+
+sudo chown 102:103 ${PLUGINS}
+sudo docker cp  "${PLUGINS}" rabbitmq_metal_archives_wrapper_test_server:/etc/rabbitmq/enabled_plugins
+sudo rm -f ${PLUGINS}
+
+docker start rabbitmq_metal_archives_wrapper_test_server > /dev/null
