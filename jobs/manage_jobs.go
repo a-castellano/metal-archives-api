@@ -26,11 +26,10 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 				case commontypes.ArtistName:
 					data, extraData, errSearchArtist := artists.SearchArtist(client, retrievalData.Artist)
 					// If there is no artist info job must return empty data, but it is not an error.
-					if errSearchArtist != nil && errSearchArtist.Error() != "No artist was found." {
+					if errSearchArtist != nil {
 						err = errors.New(errors.New("Artist retrieval failed: ").Error() + errSearchArtist.Error())
 						job.Error = err
 					} else {
-						// Encode Artist Data
 						artistData := commontypes.Artist{}
 						artistData.Name = data.Name
 						artistData.URL = data.URL
@@ -64,7 +63,7 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 			err = errors.New("Unknown Job Type for this service.")
 		}
 	} else {
-		err = errors.New("Empty data received.")
+		err = errors.New("Empty job data received.")
 	}
 	processedJob, _ = commontypes.EncodeJob(job)
 	return die, processedJob, err
