@@ -104,8 +104,8 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
-		if !strings.HasPrefix(err.Error(), "Artist retrieval failed:") {
-			t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
+		if !strings.HasPrefix(err.Error(), "Artist retrieval failed: invalid character") {
+			t.Errorf("Message with failed data should return 'Artist retrieval failed: invalid character....' error, not '%s'.", err.Error())
 		}
 	}
 
@@ -113,9 +113,10 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
 
-	if len(jobResult) != 0 {
-		t.Errorf("jobResult should be empty")
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
 	}
+	t.Errorf("%s", err)
 
 }
 
@@ -300,4 +301,6 @@ func TestProcessJobNoArtists(t *testing.T) {
 		t.Errorf("decodedJob.Error shouldn't be nil, job was processed correctly___________________-.")
 
 	}
+
+	t.Errorf("%s", decodedJob.Error)
 }
