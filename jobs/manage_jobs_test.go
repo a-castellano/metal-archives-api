@@ -51,7 +51,7 @@ func TestProcessJobEmptyData(t *testing.T) {
 
 	die, jobResult, err := ProcessJob(emptyData, client)
 
-	if err.Error() != "Empty data received." {
+	if err.Error() != "Empty job data received." {
 		t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
 	}
 
@@ -59,10 +59,9 @@ func TestProcessJobEmptyData(t *testing.T) {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
 
-	if len(jobResult) != 0 {
+	if len(jobResult) == 0 {
 		t.Errorf("jobResult should be empty")
 	}
-
 }
 
 func TestProcessJobErrorOnArtist(t *testing.T) {
@@ -105,8 +104,8 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
-		if !strings.HasPrefix(err.Error(), "Artist retrieval failed:") {
-			t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
+		if !strings.HasPrefix(err.Error(), "Artist retrieval failed: invalid character") {
+			t.Errorf("Message with failed data should return 'Artist retrieval failed: invalid character....' error, not '%s'.", err.Error())
 		}
 	}
 
@@ -114,10 +113,18 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
 
-	if len(jobResult) != 0 {
-		t.Errorf("jobResult should be empty")
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
 	}
 
+	if len(jobResult) == 0 {
+		t.Errorf("jobResult shouldn't be empty")
+	}
+	decodedJob, _ := commontypes.DecodeJob(jobResult)
+
+	if decodedJob.Error != "Artist retrieval failed: invalid character ']' looking for beginning of value" {
+		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: invalid character ']' looking for beginning of value', not '%s'.", decodedJob.Error)
+	}
 }
 
 func TestProcessJobOneArtist(t *testing.T) {
@@ -284,20 +291,20 @@ func TestProcessJobNoArtists(t *testing.T) {
 	die, jobResult, err := ProcessJob(encodedJob, client)
 
 	if err != nil {
-		if err.Error() == "Artist retrieval failed: No artist was found." {
-			t.Errorf("If no artist is found there are no errors, job has failed and it's status must be sent, but it is not a service error.")
-		} else {
-			t.Errorf("No error should be found, error is: '%s'.", err.Error())
-
+		if err.Error() != "Artist retrieval failed: No artist was found." {
+			t.Errorf("Error whould be 'Artist retrieval failed: No artist was found.' when no artist found, error is: '%s'.", err.Error())
 		}
 	}
-
 	if die == true {
 		t.Errorf("Message with failed data does not stop this service.")
 	}
 
 	if len(jobResult) == 0 {
-		t.Errorf("jobResult shouldn't be empty")
+		t.Errorf("jobResult shouldn't be empty, job was processed correctly.")
 	}
 
+	decodedJob, _ := commontypes.DecodeJob(jobResult)
+	if decodedJob.Error != "Artist retrieval failed: No artist was found." {
+		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: No artist was found.', not %s.", decodedJob.Error)
+	}
 }

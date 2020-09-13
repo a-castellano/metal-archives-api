@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/NeowayLabs/wabbit v0.0.0-20200409220312-12e68ab5b0c6
 	github.com/a-castellano/metal-archives-wrapper v0.0.0-20200906192842-d62092d6021b
-	github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92
+	github.com/a-castellano/music-manager-common-types v0.0.0-20200913142921-9d04f602678d
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/magiconair/properties v1.8.2 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
