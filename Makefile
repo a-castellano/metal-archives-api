@@ -1,4 +1,4 @@
-PROJECT_NAME := "metal-archives-wrapper"
+PROJECT_NAME := "music-manager-metal-archives-wrapper"
 PKG := "github.com/a-castellano/$(PROJECT_NAME)"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
@@ -10,8 +10,11 @@ all: build
 lint: ## Lint the files
 	@golint -set_exit_status ${PKG_LIST}
 
-test: ## Run unittests
-	@go test -short ./...
+test: ## Run unit tests
+	@go test --tags=unit_tests -short ./...
+
+test_integration: ## Run integration tests
+	@go test --tags=integration_tests -short ./...
 
 race: ## Run data race detector
 	@go test -race -short ${PKG_LIST}

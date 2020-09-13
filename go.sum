@@ -30,6 +30,10 @@ github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e
 github.com/a-castellano/music-manager-common-types v0.0.0-20200817220537-046654e23717/go.mod h1:3aBRiDbPOpMl911wOARoM3jr62DzzB+MYE2PGKkGvsY=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26 h1:KqcNZnyM3qRiY7fuKq0njuoSKH2iBAtYzwfvA/S8O3Q=
 github.com/a-castellano/music-manager-common-types v0.0.0-20200829104613-9dc32ad1eb26/go.mod h1:o065t5uo+ES5jxAE9gI9jQROQXOr3bQWk/fx19WJDC0=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92 h1:TjDZNsWOV9gWkUrp87fnWj34KjLr1lEqsqRT5LqW2xo=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200912235601-6538753d7b92/go.mod h1:fhQ2BawrJWPNA11kmtxwNrPG5tuoF6UmJmzX3QzGYY4=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200913142921-9d04f602678d h1:/pFhJ54tE0kIaanpDxeySxBbIfEtF67iKDQYqr63Mxs=
+github.com/a-castellano/music-manager-common-types v0.0.0-20200913142921-9d04f602678d/go.mod h1:fhQ2BawrJWPNA11kmtxwNrPG5tuoF6UmJmzX3QzGYY4=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938 h1:1JPMy05612rNXwI/n4eSmgPJJJRZ5+AXsRqqWvS7E+k=
 github.com/a-castellano/music-manager-metal-archives-wrapper v0.0.0-20200119190308-1f9fccfc2938/go.mod h1:DZZzf6+VoOt3nQmEVR6D6b1sCle9zkBaVY2FwdyKXV0=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -155,6 +159,8 @@ github.com/pelletier/go-toml v1.2.0 h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
 github.com/pelletier/go-toml v1.8.0 h1:Keo9qb7iRJs2voHvunFtuuYFsbWeOBh8/P9v/kVMFtw=
 github.com/pelletier/go-toml v1.8.0/go.mod h1:D6yutnOGMveHEPV7VQOuvI/gXY61bv+9bAOTRnLElKs=
+github.com/pelletier/go-toml v1.8.1 h1:1Nf83orprkJyknT6h7zbuEGUEjcyVlCxSUGTENmNCRM=
+github.com/pelletier/go-toml v1.8.1/go.mod h1:T2/BmBdy8dvIRq1a/8aqjN41wvWlN4lrapLU/GW4pbc=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/sftp v1.10.1/go.mod h1:lYOWFsE0bwd1+KfKJaKeuokY15vzFx25BLbzYYoAxZI=
@@ -288,6 +294,10 @@ golang.org/x/sys v0.0.0-20200828194041-157a740278f4 h1:kCCpuwSAoYJPkNc6x0xT9yTtV
 golang.org/x/sys v0.0.0-20200828194041-157a740278f4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200905004654-be1d3432aa8f h1:Fqb3ao1hUmOR3GkUOg/Y+BadLwykBIzs5q8Ez2SbHyc=
 golang.org/x/sys v0.0.0-20200905004654-be1d3432aa8f/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200908134130-d2e65c121b96 h1:gJciq3lOg0eS9fSZJcoHfv7q1BfC6cJfnmSSKL1yu3Q=
+golang.org/x/sys v0.0.0-20200908134130-d2e65c121b96/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200909081042-eff7692f9009 h1:W0lCpv29Hv0UaM1LXb9QlBHLNP8UFfcKjblhVCWftOM=
+golang.org/x/sys v0.0.0-20200909081042-eff7692f9009/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=
