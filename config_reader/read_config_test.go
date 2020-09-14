@@ -13,7 +13,7 @@ func TestProcessNoConfigFilePresent(t *testing.T) {
 	if err == nil {
 		t.Errorf("ReadConfig method without any valid config file should fail.")
 	} else {
-		if err.Error() != "Fatal error config file: Config File \"config\" Not Found in \"[/etc/music-manager-metal-archives-wrapper]\"" {
+		if err.Error() != "Fatal error reading config file: Config File \"config\" Not Found in \"[/home/azas/go/src/github.com/a-castellano/music-manager-metal-archives-wrapper/config_reader/config_files_test/ok/config.toml]\"" {
 			t.Errorf("Default config should be in /etc/music-manager-metal-archives-wrapper/config.toml, not in other place, error was '%s'.", err.Error())
 		}
 	}

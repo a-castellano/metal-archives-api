@@ -101,9 +101,9 @@ func TestSendDie(t *testing.T) {
 			Body:         encodedJob,
 		})
 
-	jobManagementError := startJobManagement(queueConfig, client)
+	jobManagementError := StartJobManagement(queueConfig, client)
 	if jobManagementError != nil {
-		t.Errorf("startJobManagement should return no errors when die is processed.")
+		t.Errorf("StartJobManagement should return no errors when die is processed.")
 	}
 
 }
@@ -211,10 +211,10 @@ func TestSendNoArtistsFound(t *testing.T) {
 
 	failOnError(err, "Failed to send die job in TestSendNoArtistsFound.")
 
-	jobManagementError := startJobManagement(queueConfig, client)
+	jobManagementError := StartJobManagement(queueConfig, client)
 
 	if jobManagementError != nil {
-		t.Errorf("startJobManagement should return no errors when die is processed.")
+		t.Errorf("StartJobManagement should return no errors when die is processed.")
 	}
 
 	outgoingCh, err := conn.Channel()
@@ -385,10 +385,10 @@ func TestSendArtistsFound(t *testing.T) {
 
 	failOnError(err, "Failed to send die job in TestSendNoArtistsFound.")
 
-	jobManagementError := startJobManagement(queueConfig, client)
+	jobManagementError := StartJobManagement(queueConfig, client)
 
 	if jobManagementError != nil {
-		t.Errorf("startJobManagement should return no errors when die is processed.")
+		t.Errorf("StartJobManagement should return no errors when die is processed.")
 	}
 
 	outgoingCh, err := conn.Channel()
@@ -447,6 +447,49 @@ func TestSendArtistsFound(t *testing.T) {
 
 	if len(retrievedData.ExtraData) != 1 {
 		t.Errorf("Retrieved extradata should contain 1 entry, not %d.", len(retrievedData.ExtraData))
+	}
+
+}
+
+func TestFailedConfig(t *testing.T) {
+
+	var queueConfig config.Config
+
+	queueConfig.Server.Host = "127.0.0.1"
+	queueConfig.Server.Port = 5672
+	queueConfig.Server.User = "guest"
+	queueConfig.Server.Password = "nopassword"
+
+	queueConfig.Incoming.Name = "incoming"
+	queueConfig.Incoming.Durable = true
+	queueConfig.Incoming.DeleteWhenUnused = false
+	queueConfig.Incoming.Exclusive = false
+	queueConfig.Incoming.NoWait = false
+	queueConfig.Incoming.NoLocal = false
+	queueConfig.Incoming.AutoACK = false
+
+	queueConfig.Outgoing.Name = "outgoing"
+	queueConfig.Outgoing.Durable = true
+	queueConfig.Outgoing.DeleteWhenUnused = false
+	queueConfig.Outgoing.Exclusive = false
+	queueConfig.Outgoing.NoWait = false
+	queueConfig.Outgoing.NoLocal = false
+	queueConfig.Outgoing.AutoACK = true
+
+	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
+{
+	"error": "",
+	"iTotalRecords": 0,
+	"iTotalDisplayRecords": 0,
+	"sEcho": 0,
+	"aaData": [
+		]
+}
+	`))}}}
+
+	jobManagementError := StartJobManagement(queueConfig, client)
+	if jobManagementError == nil {
+		t.Errorf("StartJobManagement should return an error when credentials are invalid.")
 	}
 
 }

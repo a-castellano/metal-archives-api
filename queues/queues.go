@@ -9,11 +9,14 @@ import (
 	"strconv"
 )
 
-func startJobManagement(config config.Config, client http.Client) error {
+func StartJobManagement(config config.Config, client http.Client) error {
 
 	connection_string := "amqp://" + config.Server.User + ":" + config.Server.Password + "@" + config.Server.Host + ":" + strconv.Itoa(config.Server.Port) + "/"
 	conn, err := amqp.Dial(connection_string)
 
+	if err != nil {
+		return fmt.Errorf("Failed to stablish connection with RabbitMQ: %w", err)
+	}
 	defer conn.Close()
 
 	incoming_ch, err := conn.Channel()
