@@ -95,12 +95,6 @@ coverage:
     - sleep 10
   script:
     - make coverage
-  artifacts:
-    name: "coverage-$CI_PIPELINE_ID"
-    paths:
-      - coverage.html
-      - cover
-    expire_in: 1 hour
   coverage: /total:\s+.+\s(\d+\.\d+?)%$/
 
 code_coverage_report:
@@ -119,6 +113,12 @@ code_coverage_report:
   - master
   dependencies:
   - coverage
+  artifacts:
+    name: "coverage-$CI_PIPELINE_ID"
+    paths:
+      - coverage.html
+      - cover
+    expire_in: 1 hour
 
 scan:
   stage: scan
