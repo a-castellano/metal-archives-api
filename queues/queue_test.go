@@ -38,20 +38,7 @@ func TestSendDie(t *testing.T) {
 	queueConfig.Server.Password = "guest"
 
 	queueConfig.Incoming.Name = "incoming"
-	queueConfig.Incoming.Durable = true
-	queueConfig.Incoming.DeleteWhenUnused = false
-	queueConfig.Incoming.Exclusive = false
-	queueConfig.Incoming.NoWait = false
-	queueConfig.Incoming.NoLocal = false
-	queueConfig.Incoming.AutoACK = false
-
 	queueConfig.Outgoing.Name = "outgoing"
-	queueConfig.Outgoing.Durable = true
-	queueConfig.Outgoing.DeleteWhenUnused = false
-	queueConfig.Outgoing.Exclusive = false
-	queueConfig.Outgoing.NoWait = false
-	queueConfig.Outgoing.NoLocal = false
-	queueConfig.Outgoing.AutoACK = true
 
 	var job commontypes.Job
 
@@ -118,20 +105,7 @@ func TestSendNoArtistsFound(t *testing.T) {
 	queueConfig.Server.Password = "guest"
 
 	queueConfig.Incoming.Name = "incoming"
-	queueConfig.Incoming.Durable = true
-	queueConfig.Incoming.DeleteWhenUnused = false
-	queueConfig.Incoming.Exclusive = false
-	queueConfig.Incoming.NoWait = false
-	queueConfig.Incoming.NoLocal = false
-	queueConfig.Incoming.AutoACK = false
-
 	queueConfig.Outgoing.Name = "outgoing"
-	queueConfig.Outgoing.Durable = true
-	queueConfig.Outgoing.DeleteWhenUnused = false
-	queueConfig.Outgoing.Exclusive = false
-	queueConfig.Outgoing.NoWait = false
-	queueConfig.Outgoing.NoLocal = false
-	queueConfig.Outgoing.AutoACK = true
 
 	var infoRetrieval commontypes.InfoRetrieval
 	var job commontypes.Job
@@ -268,20 +242,7 @@ func TestSendArtistsFound(t *testing.T) {
 	queueConfig.Server.Password = "guest"
 
 	queueConfig.Incoming.Name = "incoming"
-	queueConfig.Incoming.Durable = true
-	queueConfig.Incoming.DeleteWhenUnused = false
-	queueConfig.Incoming.Exclusive = false
-	queueConfig.Incoming.NoWait = false
-	queueConfig.Incoming.NoLocal = false
-	queueConfig.Incoming.AutoACK = false
-
 	queueConfig.Outgoing.Name = "outgoing"
-	queueConfig.Outgoing.Durable = true
-	queueConfig.Outgoing.DeleteWhenUnused = false
-	queueConfig.Outgoing.Exclusive = false
-	queueConfig.Outgoing.NoWait = false
-	queueConfig.Outgoing.NoLocal = false
-	queueConfig.Outgoing.AutoACK = true
 
 	var infoRetrieval commontypes.InfoRetrieval
 	var job commontypes.Job
@@ -461,20 +422,7 @@ func TestFailedConfig(t *testing.T) {
 	queueConfig.Server.Password = "nopassword"
 
 	queueConfig.Incoming.Name = "incoming"
-	queueConfig.Incoming.Durable = true
-	queueConfig.Incoming.DeleteWhenUnused = false
-	queueConfig.Incoming.Exclusive = false
-	queueConfig.Incoming.NoWait = false
-	queueConfig.Incoming.NoLocal = false
-	queueConfig.Incoming.AutoACK = false
-
 	queueConfig.Outgoing.Name = "outgoing"
-	queueConfig.Outgoing.Durable = true
-	queueConfig.Outgoing.DeleteWhenUnused = false
-	queueConfig.Outgoing.Exclusive = false
-	queueConfig.Outgoing.NoWait = false
-	queueConfig.Outgoing.NoLocal = false
-	queueConfig.Outgoing.AutoACK = true
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 {

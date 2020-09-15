@@ -6,19 +6,6 @@ password = "pass"
 
 [incoming]
 name = "incoming"
-durable = true
-delete_when_unused = false
-exclusive = false
-no_wait = false
-no_local = false
-auto_ack = false
 
 [outgoing]
 name = "outgoing"
-durable = true
-delete_when_unused = false
-exclusive = false
-no_wait = false
-no_local = false
-auto_ack = true
-

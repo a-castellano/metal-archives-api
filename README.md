@@ -10,11 +10,27 @@ This service is part of [Music Manager](https://git.windmaker.net/musicmanager) 
 
 This service retrieves Artists and Records from [Metal Archives](https://www.metal-archives.com/).
 
-If there is no info, this service publish a new job regarding a not found request.
+The service receives jobs sent from [Job Manager](https://git.windmaker.net/musicmanager/Job-Manager), and process them. For each processed job this service will generate a new job containing process status and result.
 
 ### Config example
 
-To do
+This service will look for its config in **/etc/music-manager-metal-archives-wrapper/config.toml**, parent folder can be changed setting the environment variable **MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION**.
+
+Here is a config example:
+
+```toml
+[server]
+host = "localhost"
+port = 5672
+user = "guest"
+password = "pass"
+
+[incoming]
+name = "incoming"
+
+[outgoing]
+name = "outgoing"
+```
 
 ## Testing
 

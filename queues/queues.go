@@ -35,11 +35,11 @@ func StartJobManagement(config config.Config, client http.Client) error {
 
 	incoming_q, err := incoming_ch.QueueDeclare(
 		config.Incoming.Name,
-		config.Incoming.Durable,
-		config.Incoming.DeleteWhenUnused,
-		config.Incoming.Exclusive,
-		config.Incoming.NoWait,
-		nil, // arguments
+		true,  // Durable
+		false, // DeleteWhenUnused
+		false, // Exclusive
+		false, // NoWait
+		nil,   // arguments
 	)
 
 	if err != nil {
@@ -48,11 +48,11 @@ func StartJobManagement(config config.Config, client http.Client) error {
 
 	outgoing_q, err := outgoing_ch.QueueDeclare(
 		config.Outgoing.Name,
-		config.Outgoing.Durable,
-		config.Outgoing.DeleteWhenUnused,
-		config.Outgoing.Exclusive,
-		config.Outgoing.NoWait,
-		nil, // arguments
+		true,  // Durable
+		false, // DeleteWhenUnused
+		false, // Exclusive
+		false, // NoWait
+		nil,   // arguments
 	)
 
 	if err != nil {
@@ -71,12 +71,12 @@ func StartJobManagement(config config.Config, client http.Client) error {
 
 	jobsToProcess, err := incoming_ch.Consume(
 		incoming_q.Name,
-		"",                        // consumer
-		config.Incoming.AutoACK,   // auto-ack
-		config.Incoming.Exclusive, // exclusive
-		config.Incoming.NoLocal,   // no-local
-		config.Incoming.NoWait,    // no-wait
-		nil,                       // args
+		"",    // consumer
+		false, // auto-ack
+		false, // exclusive
+		false, // no-local
+		false, // no-wait
+		nil,   // args
 	)
 
 	if err != nil {
@@ -106,7 +106,6 @@ func StartJobManagement(config config.Config, client http.Client) error {
 					Body:         jobResult,
 				})
 			if err != nil {
-				//return fmt.Errorf("Failed to send job result: %w", err)
 				fmt.Println(err)
 				return
 			}
