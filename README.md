@@ -25,7 +25,7 @@ Use make to run unit tests:
 make test
 ```
 
-### Functional tests
+### Integration tests
 
 Docker is required for make the following tests run, user must be sudoer too.
 ```bash

@@ -50,7 +50,7 @@ func ReadConfig() (Config, error) {
 	viper.AddConfigPath(configFileLocation)
 
 	if err := viper.ReadInConfig(); err != nil {
-		return config, errors.New(errors.New("Fatal error config file: ").Error() + err.Error())
+		return config, errors.New(errors.New("Fatal error reading config file: ").Error() + err.Error())
 	}
 
 	for _, server_variable := range server_variables {
