@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
+func ProcessJob(data []byte, origin string, client http.Client) (bool, []byte, error) {
 
 	receivedJob, decodeJobErr := commontypes.DecodeJob(data)
 	var job commontypes.Job
@@ -18,6 +18,8 @@ func ProcessJob(data []byte, client http.Client) (bool, []byte, error) {
 	job.ID = receivedJob.ID
 	job.Type = receivedJob.Type
 	job.Status = receivedJob.Status
+
+	job.LastOrigin = origin
 
 	if decodeJobErr == nil {
 		// Job has been successfully decoded

@@ -26,6 +26,7 @@ type Config struct {
 	Server   Server
 	Incoming Queue
 	Outgoing Queue
+	Origin   string
 }
 
 func ReadConfig() (Config, error) {
@@ -35,6 +36,7 @@ func ReadConfig() (Config, error) {
 	server_variables := []string{"host", "port", "user", "password"}
 	queue_names := []string{"incoming", "outgoing"}
 	queue_variables := []string{"name"}
+	origin_variables := []string{"name"}
 
 	viper := viperLib.New()
 
@@ -67,6 +69,12 @@ func ReadConfig() (Config, error) {
 		}
 	}
 
+	for _, origin_variable := range origin_variables {
+		if !viper.IsSet("origin." + origin_variable) {
+			return config, errors.New("Fatal error config: no origin " + origin_variable + " was found.")
+		}
+	}
+
 	server := Server{User: viper.GetString("server.user"), Password: viper.GetString("server.password"), Host: viper.GetString("server.host"), Port: viper.GetInt("server.port")}
 	incoming := Queue{Name: viper.GetString("incoming.name")}
 	outgoing := Queue{Name: viper.GetString("outgoing.name")}
@@ -74,6 +82,7 @@ func ReadConfig() (Config, error) {
 	config.Server = server
 	config.Incoming = incoming
 	config.Outgoing = outgoing
+	config.Origin = viper.GetString("origin.name")
 
 	return config, nil
 }
