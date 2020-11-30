@@ -9,6 +9,3 @@ name = "incoming"
 
 [outgoing]
 name = "outgoing"
-
-[origin]
-name = "MetalArchivesWrapper"

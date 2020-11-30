@@ -49,7 +49,9 @@ func TestProcessJobEmptyData(t *testing.T) {
 }
 	`))}}}
 
-	die, jobResult, err := ProcessJob(emptyData, client)
+	origin := "MetalArchivesWrapper"
+
+	die, jobResult, err := ProcessJob(emptyData, origin, client)
 
 	if err.Error() != "Empty job data received." {
 		t.Errorf("Message with failed data should return 'Empty data received.' error, not '%s'.", err.Error())
@@ -101,7 +103,8 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, jobResult, err := ProcessJob(encodedJob, client)
+	origin := "MetalArchivesWrapper"
+	die, jobResult, err := ProcessJob(encodedJob, origin, client)
 
 	if err != nil {
 		if !strings.HasPrefix(err.Error(), "Artist retrieval failed: invalid character") {
@@ -125,6 +128,11 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	if decodedJob.Error != "Artist retrieval failed: invalid character ']' looking for beginning of value" {
 		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: invalid character ']' looking for beginning of value', not '%s'.", decodedJob.Error)
 	}
+
+	if decodedJob.LastOrigin != origin {
+		t.Errorf("decodedJob.LastOrigin should be '%s', not '%s'.", origin, decodedJob.LastOrigin)
+	}
+
 }
 
 func TestProcessJobOneArtist(t *testing.T) {
@@ -170,7 +178,8 @@ func TestProcessJobOneArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, jobResult, err := ProcessJob(encodedJob, client)
+	origin := "MetalArchivesWrapper"
+	die, jobResult, err := ProcessJob(encodedJob, origin, client)
 
 	if err != nil {
 		if err.Error() != "Empty data received." {
@@ -185,7 +194,6 @@ func TestProcessJobOneArtist(t *testing.T) {
 	if len(jobResult) == 0 {
 		t.Errorf("jobResult shouldn't be empty")
 	}
-
 }
 
 func TestProcessJobMoreThanOneArtist(t *testing.T) {
@@ -241,7 +249,8 @@ func TestProcessJobMoreThanOneArtist(t *testing.T) {
 }
 	`))}}}
 
-	die, jobResult, err := ProcessJob(encodedJob, client)
+	origin := "MetalArchivesWrapper"
+	die, jobResult, err := ProcessJob(encodedJob, origin, client)
 
 	if err != nil {
 		if err.Error() != "Empty data received." {
@@ -288,7 +297,8 @@ func TestProcessJobNoArtists(t *testing.T) {
 }
 	`))}}}
 
-	die, jobResult, err := ProcessJob(encodedJob, client)
+	origin := "MetalArchivesWrapper"
+	die, jobResult, err := ProcessJob(encodedJob, origin, client)
 
 	if err != nil {
 		if err.Error() != "Artist retrieval failed: No artist was found." {
@@ -307,4 +317,9 @@ func TestProcessJobNoArtists(t *testing.T) {
 	if decodedJob.Error != "Artist retrieval failed: No artist was found." {
 		t.Errorf("decodedJob.Error should be 'Artist retrieval failed: No artist was found.', not %s.", decodedJob.Error)
 	}
+
+	if decodedJob.LastOrigin != origin {
+		t.Errorf("decodedJob.LastOrigin should be '%s', not '%s'.", origin, decodedJob.LastOrigin)
+	}
+
 }

@@ -88,7 +88,7 @@ func StartJobManagement(config config.Config, client http.Client) error {
 	go func() {
 		for job := range jobsToProcess {
 
-			die, jobResult, _ := jobs.ProcessJob(job.Body, client)
+			die, jobResult, _ := jobs.ProcessJob(job.Body, config.Origin, client)
 
 			if die {
 				job.Ack(false)
