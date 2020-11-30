@@ -1,3 +1,5 @@
+// +build integration_tests unit_tests
+
 package config
 
 import (
@@ -11,7 +13,7 @@ func TestProcessNoConfigFilePresent(t *testing.T) {
 	if err == nil {
 		t.Errorf("ReadConfig method without any valid config file should fail.")
 	} else {
-		if err.Error() != "Fatal error config file: Config File \"config\" Not Found in \"[/etc/music-manager-metal-archives-wrapper]\"" {
+		if err.Error() != "Fatal error reading config file: Config File \"config\" Not Found in \"[/etc/music-manager-metal-archives-wrapper]\"" {
 			t.Errorf("Default config should be in /etc/music-manager-metal-archives-wrapper/config.toml, not in other place, error was '%s'.", err.Error())
 		}
 	}
@@ -53,14 +55,14 @@ func TestProcessServerNoUserPasswordInConfig(t *testing.T) {
 	}
 }
 
-func TestProcessServerNoIncomingServerInConfig(t *testing.T) {
-	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/server_no_incoming_server/")
+func TestProcessNoOriginName(t *testing.T) {
+	os.Setenv("MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION", "./config_files_test/no_origin/")
 	_, err := ReadConfig()
 	if err == nil {
-		t.Errorf("ReadConfig method without incomming server name should fail.")
+		t.Errorf("ReadConfig method without origin should fail.")
 	} else {
-		if err.Error() != "Fatal error config: no incoming server name variable was found." {
-			t.Errorf("Error should be \"Fatal error config: no incoming server name variable was found.\" but error was '%s'.", err.Error())
+		if err.Error() != "Fatal error config: no origin name was found." {
+			t.Errorf("Error should be \"Fatal error config: no origin name was found.\" but error was '%s'.", err.Error())
 		}
 	}
 }
@@ -87,44 +89,8 @@ func TestOKConfig(t *testing.T) {
 	if config.Incoming.Name != "incoming" {
 		t.Errorf("Incoming name should be incoming. Returned: %s.", config.Incoming.Name)
 	}
-	if config.Incoming.Durable != true {
-		t.Errorf("Incoming durable should be true. It's False.")
-	}
-	if config.Incoming.DeleteWhenUnused != false {
-		t.Errorf("Incoming delete_when_unused should be false. It's true.")
-	}
-	if config.Incoming.Exclusive != false {
-		t.Errorf("Incoming exclusive should be false. It's true.")
-	}
-	if config.Incoming.NoWait != false {
-		t.Errorf("Incoming no_wait should be false. It's true.")
-	}
-	if config.Incoming.NoLocal != false {
-		t.Errorf("Incoming no_local should be false. It's true.")
-	}
-	if config.Incoming.AutoACK != false {
-		t.Errorf("Incoming auto_ack should be false. It's true.")
-	}
 
 	if config.Outgoing.Name != "outgoing" {
-		t.Errorf("Outgoing name should be incoming. Returned: %s.", config.Outgoing.Name)
-	}
-	if config.Outgoing.Durable != true {
-		t.Errorf("Outgoing durable should be true. It's False.")
-	}
-	if config.Outgoing.DeleteWhenUnused != false {
-		t.Errorf("Outgoing delete_when_unused should be false. It's true.")
-	}
-	if config.Outgoing.Exclusive != false {
-		t.Errorf("Outgoing exclusive should be false. It's true.")
-	}
-	if config.Outgoing.NoWait != false {
-		t.Errorf("Outgoing no_wait should be false. It's true.")
-	}
-	if config.Outgoing.NoLocal != false {
-		t.Errorf("Outgoing no_local should be false. It's true.")
-	}
-	if config.Outgoing.AutoACK != true {
-		t.Errorf("Outgoing auto_ack should be true. It's false.")
+		t.Errorf("Outgoing name should be outgoing. Returned: %s.", config.Outgoing.Name)
 	}
 }

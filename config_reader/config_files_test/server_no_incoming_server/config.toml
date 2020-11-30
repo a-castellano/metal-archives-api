@@ -1,5 +1,0 @@
-[server]
-host = "localhost"
-port = 12
-user = "guest"
-password = "guest"
