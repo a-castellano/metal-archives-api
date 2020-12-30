@@ -1,4 +1,4 @@
-image: registry.windmaker.net:5005/a-castellano/limani/base_golang_1_15:202012300901
+image: registry.windmaker.net:5005/a-castellano/limani/base_golang_1_15:202012301714
 
 stages:
     - unit_tests
@@ -82,7 +82,7 @@ integration_tests:
 coverage:
   stage: coverage
   services:
-    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012301714
       alias: rabbitmq
   before_script:
     - export CC=/usr/bin/clang
