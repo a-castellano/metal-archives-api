@@ -32,7 +32,7 @@ func TestSendDie(t *testing.T) {
 
 	var queueConfig config.Config
 
-	queueConfig.Server.Host = "127.0.0.1"
+	queueConfig.Server.Host = "rabbitmq"
 	queueConfig.Server.Port = 5672
 	queueConfig.Server.User = "guest"
 	queueConfig.Server.Password = "guest"
@@ -60,7 +60,7 @@ func TestSendDie(t *testing.T) {
 }
 	`))}}}
 
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
@@ -99,7 +99,7 @@ func TestSendNoArtistsFound(t *testing.T) {
 
 	var queueConfig config.Config
 
-	queueConfig.Server.Host = "127.0.0.1"
+	queueConfig.Server.Host = "rabbitmq"
 	queueConfig.Server.Port = 5672
 	queueConfig.Server.User = "guest"
 	queueConfig.Server.Password = "guest"
@@ -134,7 +134,7 @@ func TestSendNoArtistsFound(t *testing.T) {
 }
 	`))}}}
 
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ in TestSendNoArtistsFound.")
 	defer conn.Close()
 
@@ -236,7 +236,7 @@ func TestSendArtistsFound(t *testing.T) {
 
 	var queueConfig config.Config
 
-	queueConfig.Server.Host = "127.0.0.1"
+	queueConfig.Server.Host = "rabbitmq"
 	queueConfig.Server.Port = 5672
 	queueConfig.Server.User = "guest"
 	queueConfig.Server.Password = "guest"
@@ -295,7 +295,7 @@ func TestSendArtistsFound(t *testing.T) {
 }
 	`))}}}
 
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ in TestSendNoArtistsFound.")
 	defer conn.Close()
 
