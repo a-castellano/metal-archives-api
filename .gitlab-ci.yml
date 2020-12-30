@@ -1,4 +1,4 @@
-image: daedalusproject/base_golang_1_15:202009121604
+image: daedalusproject/base_golang_1_15:202012092044
 
 stages:
     - unit_tests
@@ -64,10 +64,10 @@ lint_code:
 
 integration_tests:
   stage: integration_tests
+  services:
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+      alias: rabbitmq
   before_script:
-    - sudo apt-get update
-    - sudo apt-get install -y rabbitmq-server
-    - sudo service rabbitmq-server start
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"
@@ -81,10 +81,10 @@ integration_tests:
 
 coverage:
   stage: coverage
+  services:
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+      alias: rabbitmq
   before_script:
-    - sudo apt-get update
-    - sudo apt-get install -y rabbitmq-server
-    - sudo service rabbitmq-server start
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"
@@ -99,10 +99,10 @@ coverage:
 
 code_coverage_report:
   stage: report
+  services:
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+      alias: rabbitmq
   before_script:
-    - sudo apt-get update
-    - sudo apt-get install -y rabbitmq-server
-    - sudo service rabbitmq-server start
     - export CC=/usr/bin/clang
     - export GOPATH="$(pwd)/go"
     - mkdir -p "$(pwd)/go"
