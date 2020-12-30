@@ -65,7 +65,7 @@ lint_code:
 integration_tests:
   stage: integration_tests
   services:
-    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012301714
       alias: rabbitmq
   before_script:
     - export CC=/usr/bin/clang
@@ -75,7 +75,6 @@ integration_tests:
     - mkdir -p $GOPATH/src/github.com/a-castellano
     - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
     - cd $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
-    - sleep 10
   script:
     - make test_integration
 
@@ -92,7 +91,6 @@ coverage:
     - mkdir -p $GOPATH/src/github.com/a-castellano
     - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
     - cd $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
-    - sleep 10
   script:
     - make coverage
   coverage: /total:\s+.+\s(\d+\.\d+?)%$/
@@ -100,7 +98,7 @@ coverage:
 code_coverage_report:
   stage: report
   services:
-    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012301714
       alias: rabbitmq
   before_script:
     - export CC=/usr/bin/clang
@@ -110,7 +108,6 @@ code_coverage_report:
     - mkdir -p $GOPATH/src/github.com/a-castellano
     - ln -s ${CI_PROJECT_DIR} $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
     - cd $GOPATH/src/github.com/a-castellano/music-manager-metal-archives-wrapper
-    - sleep 10
   script:
     - make coverhtml
   only:
@@ -134,7 +131,7 @@ scan:
 
 pages:
   stage: deploy
-  image: daedalusproject/base:202001111126
+  image: registry.windmaker.net:5005/a-castellano/limani/base:202012301714
   script:
   - cp coverage.html public/
   artifacts:
