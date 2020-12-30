@@ -22,32 +22,6 @@ docker rm $(docker ps -a --filter name=rabbitmq_metal_archives_wrapper_test_serv
 
 # Create docker image
 
-docker create --name rabbitmq_metal_archives_wrapper_test_server -p 5672:5672 -p 15672:15672 daedalusproject/base_rabbitmq_server 2> /dev/null > /dev/null
-
-CONF="$(mktemp)"
-
-cat <<EOF >>$CONF
-
-listeners.tcp.default = 5672
-loopback_users.guest = false
-
-management.tcp.port = 15672
-management.tcp.ip   = 0.0.0.0
-
-EOF
-
-sudo chown 102:103 ${CONF}
-sudo docker cp  "${CONF}" rabbitmq_metal_archives_wrapper_test_server:/etc/rabbitmq/rabbitmq.conf
-sudo rm -f ${CONF}
-
-PLUGINS="$(mktemp)"
-
-cat <<EOF >>$PLUGINS
-[rabbitmq_management].
-EOF
-
-sudo chown 102:103 ${PLUGINS}
-sudo docker cp  "${PLUGINS}" rabbitmq_metal_archives_wrapper_test_server:/etc/rabbitmq/enabled_plugins
-sudo rm -f ${PLUGINS}
+docker create --name rabbitmq_metal_archives_wrapper_test_server -p 5672:5672 -p 15672:15672 registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server 2> /dev/null > /dev/null
 
 docker start rabbitmq_metal_archives_wrapper_test_server > /dev/null

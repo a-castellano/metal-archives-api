@@ -1,4 +1,4 @@
-image: daedalusproject/base_golang_1_15:202012092044
+image: registry.windmaker.net:5005/a-castellano/limani/base_golang_1_15:202012300901
 
 stages:
     - unit_tests
@@ -65,7 +65,7 @@ lint_code:
 integration_tests:
   stage: integration_tests
   services:
-    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server
       alias: rabbitmq
   before_script:
     - export CC=/usr/bin/clang
@@ -100,7 +100,7 @@ coverage:
 code_coverage_report:
   stage: report
   services:
-    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server:202012300901
+    - name: registry.windmaker.net:5005/a-castellano/limani/base_rabbitmq_server
       alias: rabbitmq
   before_script:
     - export CC=/usr/bin/clang
