@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
+	types "github.com/a-castellano/music-manager-metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -21,7 +22,7 @@ type SearchAlbumData struct {
 	Artist    string
 	ArtistID  int
 	ArtistURL string
-	Type      types.RecordType
+	Type      commontypes.RecordType
 	Tracks    []Track
 }
 

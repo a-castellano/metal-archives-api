@@ -4,7 +4,7 @@ package artists
 
 import (
 	"bytes"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -12,7 +12,7 @@ import (
 
 func TestGetArtistRecordBroken(t *testing.T) {
 
-	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: 3540351548, Genre: "Black/Death Metal", Country: "Switzerland"}
+	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: "3540351548", Genre: "Black/Death Metal", Country: "Switzerland"}
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 not html code
@@ -31,7 +31,7 @@ not html code
 
 func TestGetArtistRecords(t *testing.T) {
 
-	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: 3540351548, Genre: "Black/Death Metal", Country: "Switzerland"}
+	artistData := SearchArtistData{Name: "Bölzer", URL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", ID: "3540351548", Genre: "Black/Death Metal", Country: "Switzerland"}
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
  <table width="100%" cellpadding="0" cellspacing="0" class="display discog">
@@ -112,7 +112,7 @@ func TestGetArtistRecords(t *testing.T) {
 		t.Errorf("First Bölzer record should be 'Roman Acupuncture'.")
 	}
 
-	if first_record.ID != 350987 {
+	if first_record.ID != "350987" {
 		t.Errorf("First Bölzer record should have 350987 as ID.")
 	}
 
@@ -124,7 +124,7 @@ func TestGetArtistRecords(t *testing.T) {
 		t.Errorf(`First Bölzer record URL is wrong.`)
 	}
 
-	if first_record.Type != types.Demo {
+	if first_record.Type != commontypes.Demo {
 		t.Errorf(`First Bölzer record URL is a demo.`)
 	}
 
@@ -132,7 +132,7 @@ func TestGetArtistRecords(t *testing.T) {
 
 func TestGetArtistMoreRecords(t *testing.T) {
 
-	artistData := SearchArtistData{Name: "Hypocrisy", URL: "https://www.metal-archives.com/bands/Hypocrisy/96", ID: 96, Genre: "Death Metal (early), Melodic Death Metal (later)", Country: "Sweden"}
+	artistData := SearchArtistData{Name: "Hypocrisy", URL: "https://www.metal-archives.com/bands/Hypocrisy/96", ID: "96", Genre: "Death Metal (early), Melodic Death Metal (later)", Country: "Sweden"}
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
  <table width="100%" cellpadding="0" cellspacing="0" class="display discog">
@@ -465,7 +465,7 @@ func TestGetArtistMoreRecords(t *testing.T) {
 
 	video_split := records[19]
 
-	if video_split.Type != types.Other {
+	if video_split.Type != commontypes.Other {
 		t.Errorf(`'Nuclear Blast Festivals 2000' record type should be Other.`)
 	}
 }

@@ -5,11 +5,10 @@ import (
 	"errors"
 	"fmt"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	types "github.com/a-castellano/music-manager-metal-archives-wrapper/types"
 	"io/ioutil"
 	"net/http"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -71,7 +70,7 @@ func SearchArtist(client http.Client, artist string) (SearchArtistData, []Search
 					artistData.Genre = foundArtistData[1]
 					artistData.Country = foundArtistData[2]
 					IDmatch := artistIDre.FindAllStringSubmatch(artistData.URL, -1)
-					artistData.ID, _ = strconv.Atoi(IDmatch[0][1])
+					artistData.ID = IDmatch[0][1]
 					found = true
 				} else {
 					extraData := SearchArtistData{}
@@ -80,7 +79,7 @@ func SearchArtist(client http.Client, artist string) (SearchArtistData, []Search
 					extraData.Genre = foundArtistData[1]
 					extraData.Country = foundArtistData[2]
 					IDmatch := artistIDre.FindAllStringSubmatch(extraData.URL, -1)
-					extraData.ID, _ = strconv.Atoi(IDmatch[0][1])
+					extraData.ID = IDmatch[0][1]
 					artistExtraData = append(artistExtraData, extraData)
 				}
 			}

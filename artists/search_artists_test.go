@@ -140,8 +140,8 @@ func TestSearchArtistErrored(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
 
-	if data.ID != 0 {
-		t.Errorf("Retrieved artist id should be 0.")
+	if data.ID != "" {
+		t.Errorf("Retrieved artist id should be empty.")
 	}
 
 	if data.Genre != "" {
@@ -187,8 +187,8 @@ func TestSearchArtistNotFound(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
 
-	if data.ID != 0 {
-		t.Errorf("Retrieved artist id should be 0.")
+	if data.ID != "" {
+		t.Errorf("Retrieved artist id should be empty.")
 	}
 
 	if data.Genre != "" {
@@ -249,8 +249,8 @@ func TestSearchArtistNotMatch(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be empty.")
 	}
 
-	if data.ID != 0 {
-		t.Errorf("Retrieved artist id should be 0.")
+	if data.ID != "" {
+		t.Errorf("Retrieved artist id should be empty.")
 	}
 
 	if data.Genre != "" {
@@ -308,7 +308,7 @@ func TestSearchArtistMatch(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
 	}
 
-	if data.ID != 88 {
+	if data.ID != "88" {
 		t.Errorf("Retrieved artist id should be 88.")
 	}
 
@@ -366,7 +366,7 @@ func TestSearchArtistMatchLowercase(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Burzum/88'.")
 	}
 
-	if data.ID != 88 {
+	if data.ID != "88" {
 		t.Errorf("Retrieved artist id should be 88.")
 	}
 
@@ -434,7 +434,7 @@ func TestSearchArtistMultipleMatches(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Hypocrisy/96'.")
 	}
 
-	if data.ID != 96 {
+	if data.ID != "96" {
 		t.Errorf("Retrieved artist id should be 96.")
 	}
 
@@ -458,7 +458,7 @@ func TestSearchArtistMultipleMatches(t *testing.T) {
 		t.Errorf("Retrieved artist URL should be 'https://www.metal-archives.com/bands/Hypocrisy/56165'.")
 	}
 
-	if extraData[0].ID != 56165 {
+	if extraData[0].ID != "56165" {
 		t.Errorf("Retrieved artist id should be 56165.")
 	}
 
