@@ -1,5 +1,9 @@
 package types
 
+import (
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
+)
+
 type SearchAjaxData struct {
 	Error               string     `json:"error"`
 	TotalRecords        int        `json:"iTotalRecords"`
@@ -8,45 +12,30 @@ type SearchAjaxData struct {
 	Data                [][]string `json:"aaData"`
 }
 
-type RecordType int
-
-const (
-	FullLength RecordType = 1 << iota
-	Demo
-	EP
-	Compilation
-	Live
-	BoxedSet
-	Single
-	Video
-	Split
-	Other
-)
-
-func SelectRecordType(record string) RecordType {
-	var typeFound RecordType
+func SelectRecordType(record string) commontypes.RecordType {
+	var typeFound commontypes.RecordType
 
 	switch record {
 	case "Full-length":
-		typeFound = FullLength
+		typeFound = commontypes.FullLength
 	case "EP":
-		typeFound = EP
+		typeFound = commontypes.EP
 	case "Compilation":
-		typeFound = Compilation
+		typeFound = commontypes.Compilation
 	case "Demo":
-		typeFound = Demo
+		typeFound = commontypes.Demo
 	case "Video":
-		typeFound = Video
+		typeFound = commontypes.Video
 	case "Single":
-		typeFound = Single
+		typeFound = commontypes.Single
 	case "Live album":
-		typeFound = Live
+		typeFound = commontypes.Live
 	case "Split":
-		typeFound = Split
+		typeFound = commontypes.Split
 	case "Boxed set":
-		typeFound = BoxedSet
+		typeFound = commontypes.BoxedSet
 	default:
-		typeFound = Other
+		typeFound = commontypes.Other
 	}
 
 	return typeFound
