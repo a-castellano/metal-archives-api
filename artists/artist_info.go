@@ -3,7 +3,8 @@ package artists
 import (
 	"errors"
 	"fmt"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
+	types "github.com/a-castellano/music-manager-metal-archives-wrapper/types"
 	"golang.org/x/net/html"
 	"io/ioutil"
 	"net/http"
@@ -12,17 +13,9 @@ import (
 	"strings"
 )
 
-type Record struct {
-	Name string
-	ID   int
-	Year int
-	URL  string
-	Type types.RecordType
-}
-
-func readRecord(n *html.Node) Record {
+func readRecord(n *html.Node) commontypes.Record {
 	recordIDre := regexp.MustCompile(`^[^\/]*\/\/[^\/]*\/albums\/[^\/]*\/[^\/]*\/([0-9]*)$`)
-	var newRecord Record
+	var newRecord commontypes.Record
 
 	RecordInfo := n.FirstChild.NextSibling.FirstChild
 
@@ -30,7 +23,7 @@ func readRecord(n *html.Node) Record {
 	RecordNameInfo := RecordInfo.FirstChild
 	newRecord.Name = RecordNameInfo.Data
 	match := recordIDre.FindAllStringSubmatch(newRecord.URL, -1)
-	newRecord.ID, _ = strconv.Atoi(match[0][1])
+	newRecord.ID = match[0][1]
 	RecordTypeInfo := n.FirstChild.NextSibling.NextSibling.NextSibling.FirstChild
 
 	newRecord.Type = types.SelectRecordType(RecordTypeInfo.Data)
@@ -41,10 +34,10 @@ func readRecord(n *html.Node) Record {
 	return newRecord
 }
 
-func GetArtistRecords(client http.Client, artistData SearchArtistData) ([]Record, error) {
+func GetArtistRecords(client http.Client, artistData SearchArtistData) ([]commontypes.Record, error) {
 
-	var records []Record
-	url := fmt.Sprintf("https://www.metal-archives.com/band/discography/id/%d/tab/all", artistData.ID)
+	var records []commontypes.Record
+	url := fmt.Sprintf("https://www.metal-archives.com/band/discography/id/%s/tab/all", artistData.ID)
 	trCounter := 0
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -67,8 +60,8 @@ func GetArtistRecords(client http.Client, artistData SearchArtistData) ([]Record
 	if err != nil {
 		return records, err
 	}
-	var f func(*html.Node, *[]Record)
-	f = func(n *html.Node, records *[]Record) {
+	var f func(*html.Node, *[]commontypes.Record)
+	f = func(n *html.Node, records *[]commontypes.Record) {
 		if n.Type == html.ElementNode && n.Data == "tr" {
 			if trCounter != 0 {
 				newRecord := readRecord(n)

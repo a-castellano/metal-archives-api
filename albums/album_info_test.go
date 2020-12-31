@@ -4,7 +4,7 @@ package albums
 
 import (
 	"bytes"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -12,7 +12,7 @@ import (
 
 func TestGetTracks(t *testing.T) {
 
-	albumData := SearchAlbumData{Name: "Soma", URL: "https://www.metal-archives.com/albums/B%C3%B6lzer/Soma/447710", ID: 447710, Year: 2014, Artist: "Bölzer", ArtistID: 3540351548, ArtistURL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", Type: types.EP}
+	albumData := SearchAlbumData{Name: "Soma", URL: "https://www.metal-archives.com/albums/B%C3%B6lzer/Soma/447710", ID: 447710, Year: 2014, Artist: "Bölzer", ArtistID: 3540351548, ArtistURL: "https://www.metal-archives.com/bands/B%C3%B6lzer/3540351548", Type: commontypes.EP}
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -631,7 +631,7 @@ Anointed at Temple of Sol.</p>
 
 func TestLongerTracks(t *testing.T) {
 
-	albumData := SearchAlbumData{Name: "The Hunt", URL: "https://www.metal-archives.com/albums/Fauna/The_Hunt/189275", ID: 189275, Year: 2007, Artist: "Fauna", ArtistID: 121144, ArtistURL: "https://www.metal-archives.com/bands/Fauna/121144", Type: types.FullLength}
+	albumData := SearchAlbumData{Name: "The Hunt", URL: "https://www.metal-archives.com/albums/Fauna/The_Hunt/189275", ID: 189275, Year: 2007, Artist: "Fauna", ArtistID: 121144, ArtistURL: "https://www.metal-archives.com/bands/Fauna/121144", Type: commontypes.FullLength}
 
 	client := http.Client{Transport: &RoundTripperMock{Response: &http.Response{Body: ioutil.NopCloser(bytes.NewBufferString(`
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

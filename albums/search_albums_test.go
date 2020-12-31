@@ -4,7 +4,7 @@ package albums
 
 import (
 	"bytes"
-	"github.com/a-castellano/music-manager-metal-archives-wrapper/types"
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -250,8 +250,8 @@ func TestSearchAlbumOneAlbumFound(t *testing.T) {
 		t.Errorf("Album ArtistURL should be 'https://www.metal-archives.com/bands/Cannibal_Corpse/186', not %s.", data.ArtistURL)
 	}
 
-	if data.Type != types.FullLength {
-		t.Errorf("Album Type should be %dd, not %d.", types.FullLength, data.Type)
+	if data.Type != commontypes.FullLength {
+		t.Errorf("Album Type should be %dd, not %d.", commontypes.FullLength, data.Type)
 	}
 
 }
@@ -329,8 +329,8 @@ func TestSearchAlbumMoreThanOneAlbumFound(t *testing.T) {
 		t.Errorf("Album ArtistURL should be 'https://www.metal-archives.com/bands/Agent_Orange/25246', not %s.", data.ArtistURL)
 	}
 
-	if data.Type != types.FullLength {
-		t.Errorf("Album Type should be %dd, not %d.", types.FullLength, data.Type)
+	if data.Type != commontypes.FullLength {
+		t.Errorf("Album Type should be %dd, not %d.", commontypes.FullLength, data.Type)
 	}
 
 	firstExtraAlbum := extraData[0]
@@ -364,8 +364,8 @@ func TestSearchAlbumMoreThanOneAlbumFound(t *testing.T) {
 		t.Errorf("Album ArtistURL should be 'https://www.metal-archives.com/bands/Agent_Orange/3540387919', not %s.", firstExtraAlbum.ArtistURL)
 	}
 
-	if firstExtraAlbum.Type != types.Single {
-		t.Errorf("Album Type should be %dd, not %d.", types.Single, firstExtraAlbum.Type)
+	if firstExtraAlbum.Type != commontypes.Single {
+		t.Errorf("Album Type should be %dd, not %d.", commontypes.Single, firstExtraAlbum.Type)
 	}
 
 	if secondExtraAlbum.Name != "Agent Orange" {
@@ -396,8 +396,8 @@ func TestSearchAlbumMoreThanOneAlbumFound(t *testing.T) {
 		t.Errorf("Album ArtistURL should be 'https://www.metal-archives.com/bands/Sodom/419', not %s.", secondExtraAlbum.ArtistURL)
 	}
 
-	if secondExtraAlbum.Type != types.FullLength {
-		t.Errorf("Album Type should be %dd, not %d.", types.FullLength, secondExtraAlbum.Type)
+	if secondExtraAlbum.Type != commontypes.FullLength {
+		t.Errorf("Album Type should be %dd, not %d.", commontypes.FullLength, secondExtraAlbum.Type)
 	}
 
 }
