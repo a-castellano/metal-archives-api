@@ -94,6 +94,11 @@ coverage:
   script:
     - make coverage
   coverage: /total:\s+.+\s(\d+\.\d+?)%$/
+  artifacts:
+    name: "coverage-$CI_PIPELINE_ID"
+    paths:
+      - cover
+    expire_in: 1 hour
 
 code_coverage_report:
   stage: report
@@ -127,7 +132,7 @@ scan:
   script:
   - sonar-scanner -Dsonar.projectKey=metal-archives-wrapper -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.windmaker.net -Dsonar.login=${SONAR_LOGIN} -Dsonar.exclusions="*/*_test.go" -Dsonar.go.coverage.reportPaths="cover/coverage.report"
   dependencies:
-  - code_coverage_report
+  - coverage
 
 pages:
   stage: deploy
