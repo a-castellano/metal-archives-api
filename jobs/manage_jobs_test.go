@@ -149,7 +149,7 @@ func TestProcessJobOneArtist(t *testing.T) {
 	job.ID = 0
 	job.Status = true
 	job.Finished = false
-	job.Type = 1
+	job.Type = commontypes.ArtistInfoRetrieval
 
 	encodedJob, _ := commontypes.EncodeJob(job)
 
@@ -194,6 +194,25 @@ func TestProcessJobOneArtist(t *testing.T) {
 	if len(jobResult) == 0 {
 		t.Errorf("jobResult shouldn't be empty")
 	}
+
+	processedJob, processedJobErr := commontypes.DecodeJob(jobResult)
+	if processedJobErr != nil {
+		t.Errorf("Job result decoding shouldn't fail, error was '%s'.", processedJobErr.Error())
+	}
+
+	artistInfo, artistInfoDecodeError := commontypes.DecodeArtistInfo(processedJob.Result)
+	if artistInfoDecodeError != nil {
+		t.Errorf("Artist info decoding shouldn't fail, error was '%s'.", artistInfoDecodeError.Error())
+	}
+
+	if artistInfo.Data.Name != "Burzum" {
+		t.Errorf("Artist info first name should be Burzum, not %s.", artistInfo.Data.Name)
+	}
+
+	if len(artistInfo.Data.Records) != 0 {
+		t.Errorf("This Request is only looking for artists, so almbum list should be empty.")
+	}
+
 }
 
 func TestProcessJobMoreThanOneArtist(t *testing.T) {

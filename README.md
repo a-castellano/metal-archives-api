@@ -2,7 +2,7 @@
 
 [Project's page](https://musicmanager.gitpages.windmaker.net/metal-archives-wrapper)
 
-[![pipeline status](https://git.windmaker.net/musicmanager/metal-archives-wrapper/badges/master/pipeline.svg)](https://git.windmaker.net/musicmanager/metal-archives-wrapper/pipelines)[![coverage report](https://git.windmaker.net/musicmanager/metal-archives-wrapper/badges/master/coverage.svg)](https://musicmanager.gitpages.windmaker.net/metal-archives-wrapper/coverage.html)
+[![pipeline status](https://git.windmaker.net/musicmanager/metal-archives-wrapper/badges/master/pipeline.svg)](https://git.windmaker.net/musicmanager/metal-archives-wrapper/pipelines)[![coverage report](https://git.windmaker.net/musicmanager/metal-archives-wrapper/badges/master/coverage.svg)](https://musicmanager.gitpages.windmaker.net/metal-archives-wrapper/coverage.html)[![Quality Gate Status](https://sonarqube.windmaker.net/api/project_badges/measure?project=metal-archives-wrapper&metric=alert_status)](https://sonarqube.windmaker.net/dashboard?id=metal-archives-wrapper)
 
 This service is part of [Music Manager](https://git.windmaker.net/musicmanager) Project, see [docs](https://git.windmaker.net/musicmanager/Music-Manager-Docs) for more details.
 
