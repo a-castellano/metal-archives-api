@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	config "github.com/a-castellano/music-manager-metal-archives-wrapper/config_reader"
+	config "github.com/a-castellano/music-manager-config-reader/config_reader"
 	queues "github.com/a-castellano/music-manager-metal-archives-wrapper/queues"
 	"log"
 	"net/http"

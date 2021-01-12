@@ -5,7 +5,7 @@ package queues
 import (
 	"bytes"
 	commontypes "github.com/a-castellano/music-manager-common-types/types"
-	config "github.com/a-castellano/music-manager-metal-archives-wrapper/config_reader"
+	config "github.com/a-castellano/music-manager-config-reader/config_reader"
 	"github.com/streadway/amqp"
 	"io/ioutil"
 	"log"
