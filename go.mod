@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/a-castellano/music-manager-common-types v0.0.0-20210104195232-09e27e571acf
-	github.com/a-castellano/music-manager-config-reader v0.0.1
+	github.com/a-castellano/music-manager-config-reader v0.0.2
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
