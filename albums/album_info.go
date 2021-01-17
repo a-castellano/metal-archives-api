@@ -43,12 +43,12 @@ func getCoverURL(n *html.Node) string {
 	return cover
 }
 
-func GetAlbumInfo(client http.Client, recordData SearchAlbumData) ([]Track, string, error) {
+func GetAlbumInfo(client http.Client, albumURL string) ([]Track, string, error) {
 
 	var albumTracks []Track
 	var coverURL string
 
-	req, err := http.NewRequest(http.MethodGet, recordData.URL, nil)
+	req, err := http.NewRequest(http.MethodGet, albumURL, nil)
 	if err != nil {
 		return albumTracks, coverURL, err
 	}
