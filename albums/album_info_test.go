@@ -581,7 +581,7 @@ Anointed at Temple of Sol.</p>
 </html>
 	`))}}}
 
-	tracks, cover, err := GetAlbumInfo(client, albumData)
+	tracks, cover, err := GetAlbumInfo(client, albumData.URL)
 
 	if err != nil {
 		t.Errorf("SearchAlbumData shouldn't fail.")
@@ -1098,7 +1098,7 @@ The re-released version is sequenced as seven tracks with the following titles a
 </html>
 	`))}}}
 
-	tracks, cover, err := GetAlbumInfo(client, albumData)
+	tracks, cover, err := GetAlbumInfo(client, albumData.URL)
 
 	if err != nil {
 		t.Errorf("TestLongerTracks shouldn't fail.")
@@ -1127,5 +1127,4 @@ The re-released version is sequenced as seven tracks with the following titles a
 	if cover != "https://www.metal-archives.com/images/1/8/9/2/189275.jpg" {
 		t.Errorf("The Hunt by Fauna has cover located in 'https://www.metal-archives.com/images/1/8/9/2/189275.jpg', not %s'.", cover)
 	}
-
 }

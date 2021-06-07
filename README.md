@@ -14,7 +14,7 @@ The service receives jobs sent from [Job Manager](https://git.windmaker.net/musi
 
 ### Config example
 
-This service will look for its config in **/etc/music-manager-metal-archives-wrapper/config.toml**, parent folder can be changed setting the environment variable **MUSIC_MANAGER_METAL_ARCHIVES_WRAPPER_CONFIG_FILE_LOCATION**.
+This service will look for its config in **/etc/music-manager-service/config.toml**, parent folder can be changed setting the environment variable **MUSIC_MANAGER_SERVICE_CONFIG_FILE_LOCATION**.
 
 Here is a config example:
 
@@ -47,3 +47,4 @@ Docker is required for make the following tests run, user must be sudoer too.
 ```bash
 bash scripts/start_rabbitmq_test_server.sh
 make test_integration
+```
