@@ -63,8 +63,9 @@ func TestProcessJobEmptyData(t *testing.T) {
 	}
 
 	if len(jobResult) == 0 {
-		t.Errorf("jobResult should be empty")
+		t.Errorf("jobResult shouldn't be empty")
 	}
+
 }
 
 func TestProcessJobErrorOnArtist(t *testing.T) {
@@ -132,6 +133,10 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 
 	if decodedJob.LastOrigin != origin {
 		t.Errorf("decodedJob.LastOrigin should be '%s', not '%s'.", origin, decodedJob.LastOrigin)
+	}
+
+	if decodedJob.Status != false {
+		t.Errorf("job status should be false, there was an error processing the Job.")
 	}
 
 }
@@ -212,6 +217,9 @@ func TestProcessJobOneArtist(t *testing.T) {
 
 	if len(artistInfo.Data.Records) != 0 {
 		t.Errorf("This Request is only looking for artists, so almbum list should be empty.")
+	}
+	if processedJob.Status != true {
+		t.Errorf("job status should be true, there was no errors processing the Job.")
 	}
 
 }
@@ -341,5 +349,7 @@ func TestProcessJobNoArtists(t *testing.T) {
 	if decodedJob.LastOrigin != origin {
 		t.Errorf("decodedJob.LastOrigin should be '%s', not '%s'.", origin, decodedJob.LastOrigin)
 	}
-
+	if decodedJob.Status != false {
+		t.Errorf("job status should be false, no artist was found.")
+	}
 }
