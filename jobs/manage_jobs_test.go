@@ -4,11 +4,12 @@ package jobs
 
 import (
 	"bytes"
-	commontypes "github.com/a-castellano/music-manager-common-types/types"
 	"io/ioutil"
 	"net/http"
 	"strings"
 	"testing"
+
+	commontypes "github.com/a-castellano/music-manager-common-types/types"
 )
 
 type RoundTripperMock struct {
@@ -77,7 +78,7 @@ func TestProcessJobErrorOnArtist(t *testing.T) {
 	retrievalData, _ := commontypes.EncodeInfoRetrieval(infoRetrieval)
 
 	job.Data = retrievalData
-	job.ID = 0
+	job.ID = "jobIdHash"
 	job.Status = true
 	job.Finished = false
 	job.Type = 1
@@ -146,7 +147,7 @@ func TestProcessJobOneArtist(t *testing.T) {
 	retrievalData, _ := commontypes.EncodeInfoRetrieval(infoRetrieval)
 
 	job.Data = retrievalData
-	job.ID = 0
+	job.ID = "jobIdHash"
 	job.Status = true
 	job.Finished = false
 	job.Type = commontypes.ArtistInfoRetrieval
@@ -226,7 +227,7 @@ func TestProcessJobMoreThanOneArtist(t *testing.T) {
 	retrievalData, _ := commontypes.EncodeInfoRetrieval(infoRetrieval)
 
 	job.Data = retrievalData
-	job.ID = 0
+	job.ID = "jobIdHash"
 	job.Status = true
 	job.Finished = false
 	job.Type = 1
@@ -298,7 +299,7 @@ func TestProcessJobNoArtists(t *testing.T) {
 	retrievalData, _ := commontypes.EncodeInfoRetrieval(infoRetrieval)
 
 	job.Data = retrievalData
-	job.ID = 0
+	job.ID = "jobIdHash"
 	job.Status = true
 	job.Finished = false
 	job.Type = 1
